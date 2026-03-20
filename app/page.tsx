@@ -35,7 +35,7 @@ export default function HomePage() {
             Gratis för alla
           </p>
 
-          <h1 className="font-[family-name:var(--font-display)] text-[clamp(2.5rem,8vw,5rem)] leading-[0.95] tracking-[-0.035em] uppercase mb-6">
+          <h1 className="font-[family-name:var(--font-display)] text-[clamp(2.5rem,8vw,4.5rem)] leading-[1.15] tracking-[-0.02em] uppercase mb-6">
             Förstå AI.<br />
             Använd AI.<br />
             <span className="text-primary">Skydda dig.</span>
