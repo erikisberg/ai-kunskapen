@@ -33,9 +33,10 @@ export default async function DevSlidesPage() {
 
             <div className="space-y-3">
               {course.steps.map((step, i) => (
-                <div
+                <Link
                   key={step.id}
-                  className="border border-border rounded-lg p-4 hover:bg-secondary/50 transition-colors"
+                  href={`/dev/slides/preview?course=${course.course.slug}&step=${i}`}
+                  className="block border border-border rounded-lg p-4 hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-start gap-4">
                     <div className="w-8 h-8 rounded bg-foreground/5 flex items-center justify-center flex-shrink-0 text-sm font-mono text-muted-foreground">
@@ -75,7 +76,7 @@ export default async function DevSlidesPage() {
                       )}
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

@@ -168,6 +168,8 @@ function groupQuizOptions(
   ]
 }
 
+export { JourneyContent }
+
 export function DynamicJourney({ journeyType, steps }: DynamicJourneyProps) {
   return (
     <JourneyLayout type={journeyType}>

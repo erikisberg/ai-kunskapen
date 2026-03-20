@@ -88,6 +88,10 @@ export async function getCourseData(courseSlug: string): Promise<CourseData> {
         step.suggestedPrompts = ["Prova att ställa en fråga", "Vad kan du hjälpa mig med?"];
       }
 
+      if (slide.type === "flow") {
+        step.flowSteps = getFlowStepsForSlide(slide.heading);
+      }
+
       if (slide.type === "quiz" && slide.quiz_options) {
         step.quizOptions = slide.quiz_options;
       }
@@ -127,3 +131,35 @@ export async function getAllCourses(): Promise<Course[]> {
 }
 
 export { getTenant };
+
+// --- Flow step data (stored in code until Directus supports JSON fields) ---
+
+function getFlowStepsForSlide(heading: string): StepData["flowSteps"] {
+  if (heading.includes("HUR AI FUNGERAR")) {
+    return [
+      { label: "Du skriver en fråga", description: "\"Ge mig ett recept på pasta med 5 ingredienser\" — du formulerar vad du behöver hjälp med.", icon: "pen" },
+      { label: "Texten skickas till en server", description: "Din fråga färdas krypterat till ett datacenter med enorma datorer.", icon: "globe" },
+      { label: "AI-modellen analyserar din text", description: "Modellen bryter ner varje ord och letar efter mönster baserat på miljarder texter den tränats på.", icon: "cpu" },
+      { label: "Den förutsäger nästa ord", description: "Ord för ord gissar den vad som statistiskt sett borde komma härnäst. Det är inte tänkande — det är avancerad mönsterigenkänning.", icon: "sparkles" },
+      { label: "Svaret streamas tillbaka till dig", description: "Du ser texten dyka upp i realtid. Hela processen tar bara sekunder.", icon: "message" },
+      { label: "Du bedömer och justerar", description: "Är svaret bra? Stämmer det? Du har alltid sista ordet. Be om ändringar eller ställ en följdfråga.", icon: "check" },
+    ];
+  }
+
+  if (heading.includes("BEDRÄGERI")) {
+    return [
+      { label: "Bedragaren hittar din röst", description: "Ett videoklipp på sociala medier, ett röstmeddelande, eller ett inspelat telefonsamtal. 3 sekunder räcker.", icon: "mic" },
+      { label: "AI klonar rösten", description: "Programmet analyserar tonfall, rytm, dialekt och andningsmönster. Skapar en digital kopia som är omöjlig att skilja från originalet.", icon: "bot" },
+      { label: "De ringer din familj", description: "Med din exakta röst: \"Mamma, jag har blivit rånad!\" Avsändar-ID kan också fejkas.", icon: "phone" },
+      { label: "Panik och tidspress", description: "Bedragaren spelar på känslor och brådska. \"Jag behöver pengar NU, jag kan inte förklara.\" Målet: få dig att agera innan du tänker.", icon: "alert" },
+      { label: "Offret agerar utan att verifiera", description: "I panik överför de pengar direkt — utan att lägga på och ringa tillbaka på ett känt nummer.", icon: "money" },
+      { label: "Pengarna försvinner", description: "Överföringen går till bedragarens konto, ofta utomlands. I de flesta fall omöjligt att få tillbaka.", icon: "x" },
+    ];
+  }
+
+  return [
+    { label: "Steg 1", description: "Beskrivning saknas" },
+    { label: "Steg 2", description: "Beskrivning saknas" },
+    { label: "Steg 3", description: "Beskrivning saknas" },
+  ];
+}
