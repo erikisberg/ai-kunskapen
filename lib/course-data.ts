@@ -27,7 +27,7 @@ export type JourneyType = "learn" | "safe";
 export interface StepData {
   id: string;
   title: string;
-  type: "intro" | "content" | "quiz" | "scenario" | "llm_chat" | "checklist" | "complete";
+  type: "intro" | "content" | "quiz" | "scenario" | "llm_chat" | "checklist" | "flow" | "complete";
   heading: string;
   bodyText: string;
   systemPrompt?: string;
@@ -45,6 +45,11 @@ export interface StepData {
     id: string;
     text: string;
     description?: string;
+  }>;
+  flowSteps?: Array<{
+    label: string;
+    description: string;
+    icon?: string;
   }>;
 }
 

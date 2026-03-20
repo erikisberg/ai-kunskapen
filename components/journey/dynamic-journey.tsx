@@ -10,6 +10,7 @@ import { QuizStep } from "@/components/journey/steps/quiz-step"
 import { ScenarioStep } from "@/components/journey/steps/scenario-step"
 import { ChecklistStep } from "@/components/journey/steps/checklist-step"
 import { CompleteStep } from "@/components/journey/steps/complete-step"
+import { FlowSlide } from "@/components/journey/steps/flow-slide"
 import type { Step } from "@/lib/journey-context"
 import type { StepData, JourneyType } from "@/lib/course-data"
 
@@ -128,6 +129,15 @@ function JourneyContent({ journeyType, steps }: DynamicJourneyProps) {
               description: item.description,
             })) || []
           }
+        />
+      )
+
+    case "flow":
+      return (
+        <FlowSlide
+          type={type}
+          title={stepData.heading}
+          steps={stepData.flowSteps || []}
         />
       )
 

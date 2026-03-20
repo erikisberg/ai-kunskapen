@@ -7,7 +7,7 @@ export type JourneyType = "learn" | "safe"
 export interface Step {
   id: string
   title: string
-  type: "intro" | "content" | "quiz" | "scenario" | "chat" | "checklist" | "complete"
+  type: "intro" | "content" | "quiz" | "scenario" | "chat" | "checklist" | "flow" | "complete"
   completed: boolean
 }
 
