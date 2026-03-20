@@ -1,0 +1,14 @@
+services:
+  directus:
+    image: directus/directus:latest
+    ports:
+      - "8055:8055"
+    environment:
+      SECRET: "change-this-in-production"
+      ADMIN_EMAIL: "admin@ai-kunskapen.se"
+      ADMIN_PASSWORD: "admin"
+      DB_CLIENT: "sqlite3"
+      DB_FILENAME: "/directus/database/data.db"
+    volumes:
+      - ./database:/directus/database
+      - ./uploads:/directus/uploads
