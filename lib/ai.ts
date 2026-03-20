@@ -1,13 +1,13 @@
 import { gateway } from "ai";
 
-// AI Gateway — routes through Vercel, OIDC auth automatic
-export const exerciseModel = gateway("anthropic/claude-haiku-4.5");
+// AI Gateway — uses API key if available, falls back to OIDC
+export const exerciseModel = gateway("anthropic/claude-haiku-4.5", {
+  apiKey: process.env.AI_GATEWAY_API_KEY,
+});
 
-// Default max messages per chat exercise (overridable per slide in CMS)
 export const MAX_MESSAGES_DEFAULT = 10;
 
-// Rate limit: max requests per IP within the time window
 export const RATE_LIMIT = {
   maxRequests: 20,
-  windowMs: 10 * 60 * 1000, // 10 minutes
+  windowMs: 10 * 60 * 1000,
 };
