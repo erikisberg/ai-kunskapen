@@ -102,8 +102,20 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
   const markCurrentStepComplete = useCallback(() => {
     setProgress(prev => {
       const newSteps = [...prev.steps]
-      if (newSteps[prev.currentStep]) {
-        newSteps[prev.currentStep] = { ...newSteps[prev.currentStep], completed: true }
+      const step = newSteps[prev.currentStep]
+      if (step) {
+        newSteps[prev.currentStep] = { ...step, completed: true }
+
+        // Auto-save to database
+        const courseSlug = journeyType === "learn" ? "anvanda-ai" : "forsta-risken"
+        fetch("/api/progress", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            courseSlug,
+            moduleSlug: step.id,
+          }),
+        }).catch(() => {}) // Silent fail — progress is best-effort
       }
       const allComplete = newSteps.every(s => s.completed)
       return {
@@ -112,7 +124,7 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
         completedAt: allComplete ? new Date() : null,
       }
     })
-  }, [])
+  }, [journeyType])
 
   const resetJourney = useCallback(() => {
     setJourneyTypeState(null)

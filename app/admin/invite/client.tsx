@@ -49,7 +49,7 @@ export function InviteClient({ orgs }: { orgs: Org[] }) {
         setResult({ sent: data.sent, errors: data.errors || [] });
         setEmails("");
       } else {
-        setResult({ sent: 0, errors: [data.error || "Nagot gick fel"] });
+        setResult({ sent: 0, errors: [data.error || "Något gick fel"] });
       }
     } catch {
       setResult({ sent: 0, errors: ["Kunde inte kontakta servern"] });
@@ -107,7 +107,7 @@ export function InviteClient({ orgs }: { orgs: Org[] }) {
                   type="text"
                   value={newOrgName}
                   onChange={(e) => setNewOrgName(e.target.value)}
-                  placeholder="Foretagsnamn"
+                  placeholder="Företagsnamn"
                   className="flex-1 px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground"
                 />
               </div>
@@ -116,7 +116,7 @@ export function InviteClient({ orgs }: { orgs: Org[] }) {
                   onClick={() => setShowNewOrg(false)}
                   className="text-sm text-muted-foreground hover:underline"
                 >
-                  Valj befintlig organisation istallet
+                  Välj befintlig organisation istället
                 </button>
               )}
             </div>

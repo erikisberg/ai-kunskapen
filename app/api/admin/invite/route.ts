@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
 
       sent++;
     } catch (err) {
-      errors.push(`Kunde inte skapa inbjudan for ${email}`);
+      errors.push(`Kunde inte skapa inbjudan för ${email}`);
     }
   }
 

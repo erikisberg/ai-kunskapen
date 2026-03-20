@@ -81,13 +81,13 @@ export default async function AdminPage() {
           <div className="text-center py-20 border border-dashed border-border rounded-xl">
             <Building2 className="w-10 h-10 mx-auto text-muted-foreground/30 mb-4" />
             <p className="text-muted-foreground mb-4">
-              Inga organisationer annu
+              Inga organisationer ännu
             </p>
             <Link
               href="/admin/invite"
               className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium"
             >
-              Skapa forsta organisationen
+              Skapa första organisationen
             </Link>
           </div>
         ) : (
@@ -142,7 +142,7 @@ export default async function AdminPage() {
                       <p className="text-2xl font-semibold tabular-nums">
                         {org.completed}
                       </p>
-                      <p className="text-xs text-muted-foreground">Slutfort</p>
+                      <p className="text-xs text-muted-foreground">Slutfört</p>
                     </div>
                   </div>
 

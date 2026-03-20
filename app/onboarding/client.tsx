@@ -54,7 +54,7 @@ export function OnboardingClient({
               </div>
 
               <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl uppercase tracking-[-0.03em] mb-4 leading-[1.1]">
-                Valkomm{userName ? `en, ${userName}` : "en"}!
+                Välkomm{userName ? `en, ${userName}` : "en"}!
               </h1>
 
               {orgName && (
@@ -62,12 +62,12 @@ export function OnboardingClient({
                   <span className="font-semibold text-foreground">
                     {orgName}
                   </span>{" "}
-                  har bjudit in dig att lara dig om AI.
+                  har bjudit in dig att lära dig om AI.
                 </p>
               )}
 
               <p className="text-muted-foreground mb-10 max-w-sm mx-auto">
-                Pa 20 minuter far du praktisk kunskap om hur AI fungerar och hur
+                På 20 minuter får du praktisk kunskap om hur AI fungerar och hur
                 du skyddar dig mot nya hot.
               </p>
 
@@ -75,7 +75,7 @@ export function OnboardingClient({
                 onClick={() => setStep(1)}
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-medium hover:scale-[1.03] active:scale-[0.98] transition-all"
               >
-                Kom igang
+                Kom igång
                 <ArrowRight className="w-4 h-4" />
               </button>
             </motion.div>
@@ -90,10 +90,10 @@ export function OnboardingClient({
               transition={{ duration: 0.3 }}
             >
               <h2 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl uppercase tracking-[-0.03em] mb-2 text-center leading-[1.1]">
-                Valj din forsta kurs
+                Välj din första kurs
               </h2>
               <p className="text-muted-foreground text-center mb-8">
-                Du kan alltid byta eller gora bada senare.
+                Du kan alltid byta eller göra båda senare.
               </p>
 
               <div className="space-y-3">
@@ -119,11 +119,11 @@ export function OnboardingClient({
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg mb-1">
-                        Lar dig anvanda AI
+                        Lär dig använda AI
                       </h3>
                       <p className="text-sm text-muted-foreground">
-                        Praktisk guide till hur AI fungerar, hur du anvander den
-                        i vardagen och pa jobbet. Ca 20 min.
+                        Praktisk guide till hur AI fungerar, hur du använder den
+                        i vardagen och på jobbet. Ca 20 min.
                       </p>
                     </div>
                   </div>
@@ -151,11 +151,11 @@ export function OnboardingClient({
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg mb-1">
-                        Forsta risken med AI
+                        Förstå risken med AI
                       </h3>
                       <p className="text-sm text-muted-foreground">
-                        Deepfakes, AI-bedragerier och hur du skyddar dig. Baserat
-                        pa verkliga fall. Ca 20 min.
+                        Deepfakes, AI-bedrägerier och hur du skyddar dig. Baserat
+                        på verkliga fall. Ca 20 min.
                       </p>
                     </div>
                   </div>
@@ -173,7 +173,7 @@ export function OnboardingClient({
                       : "bg-muted text-muted-foreground cursor-not-allowed"
                   )}
                 >
-                  {saving ? "Sparar..." : "Borja kursen"}
+                  {saving ? "Sparar..." : "Börja kursen"}
                   {!saving && <ArrowRight className="w-4 h-4" />}
                 </button>
               </div>

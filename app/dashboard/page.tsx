@@ -55,7 +55,7 @@ export default async function DashboardPage() {
     {
       slug: "learn",
       href: "/journey/learn",
-      title: "Lar dig anvanda AI",
+      title: "Lär dig använda AI",
       icon: BookOpen,
       progress: learnProgress,
       completed: learnModules.length,
@@ -65,7 +65,7 @@ export default async function DashboardPage() {
     {
       slug: "safe",
       href: "/journey/safe",
-      title: "Forsta risken med AI",
+      title: "Förstå risken med AI",
       icon: ShieldCheck,
       progress: safeProgress,
       completed: safeModules.length,
@@ -92,7 +92,7 @@ export default async function DashboardPage() {
       <main className="max-w-3xl mx-auto px-6 py-10">
         <div className="mb-10">
           <h1 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl uppercase tracking-[-0.03em] mb-2 leading-[1.1]">
-            {user.name ? `Hej, ${user.name}!` : "Din oversikt"}
+            {user.name ? `Hej, ${user.name}!` : "Din översikt"}
           </h1>
           {orgName && (
             <p className="text-muted-foreground">{orgName}</p>
@@ -127,7 +127,7 @@ export default async function DashboardPage() {
                       <h2 className="font-semibold text-lg">{course.title}</h2>
                       <p className="text-sm text-muted-foreground">
                         {isDone
-                          ? "Slutford!"
+                          ? "Slutförd!"
                           : `${course.completed} av ${course.total} moduler`}
                       </p>
                     </div>
@@ -163,8 +163,8 @@ export default async function DashboardPage() {
               AI-redo 2026
             </h2>
             <p className="opacity-80 max-w-sm mx-auto">
-              Du har slutfort bada kurserna. Bra jobbat! Ditt foretag ar ett
-              steg narmare en AI-redo arbetsplats.
+              Du har slutfört båda kurserna. Bra jobbat! Ditt företag är ett
+              steg närmare en AI-redo arbetsplats.
             </p>
           </div>
         )}

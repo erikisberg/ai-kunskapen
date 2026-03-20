@@ -1,7 +1,8 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
-import { ArrowLeft, X, BookOpen, Shield } from "lucide-react"
+import { ArrowLeft, X, BookOpen, Shield, User } from "lucide-react"
 import { useJourney, type JourneyType } from "@/lib/journey-context"
 import { ProgressBar } from "./progress-bar"
 import { cn } from "@/lib/utils"
@@ -9,6 +10,33 @@ import { cn } from "@/lib/utils"
 interface JourneyLayoutProps {
   children: React.ReactNode
   type: JourneyType
+}
+
+function UserAvatar() {
+  const [email, setEmail] = useState<string | null>(null)
+
+  useEffect(() => {
+    fetch("/api/me")
+      .then((r) => r.ok ? r.json() : null)
+      .then((data) => {
+        if (data?.user?.email) setEmail(data.user.email)
+      })
+      .catch(() => {})
+  }, [])
+
+  if (!email) return null
+
+  const initial = email[0].toUpperCase()
+
+  return (
+    <Link
+      href="/dashboard"
+      className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-semibold shrink-0"
+      title={email}
+    >
+      {initial}
+    </Link>
+  )
 }
 
 export function JourneyLayout({ children, type }: JourneyLayoutProps) {
@@ -63,13 +91,16 @@ export function JourneyLayout({ children, type }: JourneyLayoutProps) {
               <ProgressBar />
             </div>
 
-            {/* Exit */}
-            <Link
-              href="/"
-              className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Avsluta
-            </Link>
+            {/* User avatar + Exit */}
+            <div className="flex items-center gap-2.5">
+              <UserAvatar />
+              <Link
+                href="/dashboard"
+                className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Avsluta
+              </Link>
+            </div>
           </div>
         </div>
       </header>
