@@ -17,15 +17,14 @@ const anton = Anton({
 })
 
 export const metadata: Metadata = {
-  title: 'AI-SKOLAN | Ostersunds kommun',
-  description: 'Lar dig anvanda AI i vardagen och skydda dig mot AI-bedragarier. Gratis utbildning fran Ostersunds kommun.',
-  generator: 'v0.app',
-  keywords: ['AI', 'artificiell intelligens', 'sakerhet', 'deepfakes', 'bedragarier', 'Ostersund', 'utbildning'],
-  authors: [{ name: 'Ostersunds kommun' }],
+  title: 'AI-kunskapen | Östersunds kommun',
+  description: 'Lär dig använda AI i vardagen och skydda dig mot AI-bedrägerier. Gratis utbildning från Östersunds kommun.',
+  keywords: ['AI', 'artificiell intelligens', 'säkerhet', 'deepfakes', 'bedrägerier', 'Östersund', 'utbildning'],
+  authors: [{ name: 'Östersunds kommun' }],
 }
 
 export const viewport: Viewport = {
-  themeColor: '#FAF5EC',
+  themeColor: '#FAF7F2',
   width: 'device-width',
   initialScale: 1,
 }

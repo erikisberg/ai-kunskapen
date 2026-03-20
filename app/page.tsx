@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ArrowRight, BookOpen, Shield, Clock, Sparkles } from "lucide-react"
+import { ArrowRight, BookOpen, Shield, Clock, Users } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export default function HomePage() {
@@ -10,226 +10,200 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="fixed top-4 left-4 right-4 z-50">
-        <div className="bg-card/80 backdrop-blur-md border border-border px-6 py-3 flex items-center justify-between rounded-full">
-          <span className="font-[family-name:var(--font-display)] text-sm tracking-tight">AI-SKOLAN</span>
-          <span className="text-sm text-muted-foreground">Ostersunds kommun</span>
+      {/* Header — quiet, grounding */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
+        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center">
+              <span className="text-primary font-semibold text-sm">Ai</span>
+            </div>
+            <span className="font-semibold text-sm tracking-tight">AI-kunskapen</span>
+          </div>
+          <span className="text-xs text-muted-foreground">Östersunds kommun</span>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 pt-20">
-        <div className="max-w-6xl mx-auto w-full">
-          <div className="text-center">
-            {/* Main heading */}
-            <h1 className="font-[family-name:var(--font-display)] text-[clamp(3rem,15vw,10rem)] leading-[0.9] tracking-[-0.045em] uppercase mb-8">
-              LAR DIG{" "}
-              <span className="text-primary">AI</span>
-              <br />
-              TRYGGT & ENKELT
-            </h1>
-            
-            <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-12 leading-relaxed">
-              AI forandrar var vardag. Har far du lara dig hur du anvander det 
-              som ett verktyg och skyddar dig mot bedragare.
-            </p>
-
-            {/* CTA */}
-            <Link 
-              href="/journey"
-              className="inline-block bg-foreground text-accent px-8 py-4 rounded-full font-[family-name:var(--font-display)] text-lg md:text-xl tracking-[-0.02em] uppercase hover:bg-foreground/90 transition-colors"
-            >
-              [ STARTA DIN RESA ]
-            </Link>
-
-            
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div className="w-px h-16 bg-foreground/20" />
-        </div>
-      </section>
-
-      {/* Journey Selection */}
-      <section id="journeys" className="py-24 md:py-32 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="font-[family-name:var(--font-display)] text-[clamp(2.5rem,8vw,5rem)] leading-[0.9] tracking-[-0.045em] uppercase text-center mb-4">
-            VALJ DIN{" "}
-            <span className="text-primary">VAG</span>
-          </h2>
-          <p className="text-center text-muted-foreground text-lg mb-16 max-w-lg mx-auto">
-            Tva korta resor med interaktiva ovningar. Borja med vilken du vill.
+      {/* Hero — calm, centered, unhurried */}
+      <section className="min-h-[85vh] flex items-center justify-center px-6 pt-20">
+        <div className="max-w-2xl mx-auto text-center">
+          <p className="text-sm font-medium text-primary mb-6 tracking-wide uppercase">
+            Gratis för alla i kommunen
           </p>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Learn Journey */}
-            <Link href="/journey/learn" className="block">
-              <div 
-                className={cn(
-                  "journey-card h-full p-8 md:p-10 border-2 border-foreground rounded-3xl",
-                  hoveredCard === 'learn' ? 'bg-primary text-primary-foreground' : 'bg-card'
-                )}
-                onMouseEnter={() => setHoveredCard('learn')}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <div className={cn(
-                  "w-14 h-14 flex items-center justify-center mb-8 border-2 rounded-xl",
-                  hoveredCard === 'learn' ? 'border-primary-foreground' : 'border-foreground'
-                )}>
-                  <BookOpen className="w-7 h-7" />
-                </div>
-                
-                <h3 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl tracking-[-0.045em] uppercase mb-4">
-                  ANVAND AI I VARDAGEN
-                </h3>
-                
-                <p className={cn(
-                  "text-lg mb-8 leading-relaxed",
-                  hoveredCard === 'learn' ? 'text-primary-foreground/80' : 'text-muted-foreground'
-                )}>
-                  Lar dig prata med AI-chatbotar, skriva bra fragor och fa hjalp med allt fran matlagning till jobbsokande.
-                </p>
+          <h1 className="font-[family-name:var(--font-display)] text-[clamp(2.5rem,8vw,5rem)] leading-[0.95] tracking-[-0.035em] uppercase mb-6">
+            Förstå AI.<br />
+            Använd AI.<br />
+            <span className="text-primary">Skydda dig.</span>
+          </h1>
 
-                <div className={cn(
-                  "flex items-center gap-6 text-sm mb-8",
-                  hoveredCard === 'learn' ? 'text-primary-foreground/70' : 'text-muted-foreground'
-                )}>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    <span>ca 20 min</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4" />
-                    <span>Praktiska ovningar</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase">
-                  <span>[ BORJA ]</span>
-                  <ArrowRight className="w-5 h-5" />
-                </div>
-              </div>
-            </Link>
-
-            {/* Safety Journey */}
-            <Link href="/journey/safe" className="block">
-              <div 
-                className={cn(
-                  "journey-card h-full p-8 md:p-10 border-2 border-foreground rounded-3xl",
-                  hoveredCard === 'safe' ? 'bg-accent text-accent-foreground' : 'bg-card'
-                )}
-                onMouseEnter={() => setHoveredCard('safe')}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <div className={cn(
-                  "w-14 h-14 flex items-center justify-center mb-8 border-2 rounded-xl",
-                  hoveredCard === 'safe' ? 'border-accent-foreground' : 'border-foreground'
-                )}>
-                  <Shield className="w-7 h-7" />
-                </div>
-                
-                <h3 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl tracking-[-0.045em] uppercase mb-4">
-                  SKYDDA DIG MOT AI-HOT
-                </h3>
-                
-                <p className={cn(
-                  "text-lg mb-8 leading-relaxed",
-                  hoveredCard === 'safe' ? 'text-accent-foreground/80' : 'text-muted-foreground'
-                )}>
-                  Lar dig kanna igen deepfakes, AI-genererade bedragarier och skydda dig sjalv och din familj.
-                </p>
-
-                <div className={cn(
-                  "flex items-center gap-6 text-sm mb-8",
-                  hoveredCard === 'safe' ? 'text-accent-foreground/70' : 'text-muted-foreground'
-                )}>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    <span>ca 20 min</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4" />
-                    <span>Realistiska scenarion</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase">
-                  <span>[ BORJA ]</span>
-                  <ArrowRight className="w-5 h-5" />
-                </div>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Features / Who is this for */}
-      <section className="py-24 md:py-32 px-4 bg-secondary">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,6vw,4rem)] leading-[0.9] tracking-[-0.045em] uppercase mb-16">
-            FOR <span className="text-primary">ALLA</span> I KOMMUNEN
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="border-t-2 border-foreground pt-6">
-              <p className="font-[family-name:var(--font-display)] text-2xl tracking-[-0.045em] uppercase mb-3">
-                PENSIONARER
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                Lar dig anvanda AI-verktyg och skydda dig mot bedragare som ringer eller skickar meddelanden.
-              </p>
-            </div>
-
-            <div className="border-t-2 border-foreground pt-6">
-              <p className="font-[family-name:var(--font-display)] text-2xl tracking-[-0.045em] uppercase mb-3">
-                FORALDRAR
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                Forsta vad dina barn anvander och hur du kan hjalpa dem navigera AI sakert.
-              </p>
-            </div>
-
-            <div className="border-t-2 border-foreground pt-6">
-              <p className="font-[family-name:var(--font-display)] text-2xl tracking-[-0.045em] uppercase mb-3">
-                ALLA ANDRA
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                Oavsett alder eller erfarenhet. Ingen forkunskap kravs. Helt gratis.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 md:py-32 px-4 bg-primary text-primary-foreground">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-[family-name:var(--font-display)] text-[clamp(2.5rem,8vw,5rem)] leading-[0.9] tracking-[-0.045em] uppercase mb-8">
-            REDO ATT BORJA?
-          </h2>
-          <p className="text-xl text-primary-foreground/80 mb-12 max-w-lg mx-auto">
-            Valj en av vara tva laresor och ta forsta steget mot en tryggare digital vardag.
+          <p className="text-lg text-muted-foreground max-w-md mx-auto mb-10 leading-relaxed">
+            Två korta kurser som ger dig praktisk AI-kunskap — från att skriva
+            din första prompt till att genomskåda bedrägerier.
           </p>
-          <Link 
-            href="/journey"
-            className="inline-block bg-accent text-accent-foreground px-8 py-4 rounded-full font-[family-name:var(--font-display)] text-xl md:text-2xl tracking-[-0.02em] uppercase hover:bg-accent/90 transition-colors"
+
+          <div className="flex items-center justify-center gap-3 text-sm text-muted-foreground mb-12">
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-4 h-4" />
+              <span>ca 20 min per kurs</span>
+            </div>
+            <span className="text-border">·</span>
+            <div className="flex items-center gap-1.5">
+              <Users className="w-4 h-4" />
+              <span>Ingen förkunskap krävs</span>
+            </div>
+          </div>
+
+          <Link
+            href="#kurser"
+            className="inline-flex items-center gap-2 text-primary font-medium hover:opacity-80 transition-opacity"
           >
-            [ STARTA NU ]
+            Välj din kurs
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 px-4 bg-foreground text-background">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="font-[family-name:var(--font-display)] text-sm tracking-tight">AI-SKOLAN</span>
-          <p className="text-sm text-background/60 text-center">
-            Ett initiativ fran Ostersunds kommun. Gratis och oppet for alla.
+      {/* Course selection — two calm doorways */}
+      <section id="kurser" className="py-20 md:py-28 px-6">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-sm font-medium text-muted-foreground mb-3 text-center uppercase tracking-wide">
+            Två kurser
           </p>
-          <span className="text-sm text-background/60">2026</span>
+          <h2 className="text-2xl md:text-3xl font-semibold text-center mb-14 tracking-tight">
+            Börja med vilken du vill
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-5">
+            {/* Learn */}
+            <Link href="/journey/learn" className="block group">
+              <div
+                className={cn(
+                  "journey-card h-full rounded-xl border border-border bg-card p-8 md:p-9",
+                  hoveredCard === "learn" && "border-primary/30"
+                )}
+                onMouseEnter={() => setHoveredCard("learn")}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                <div className="w-11 h-11 rounded-lg bg-primary/8 flex items-center justify-center mb-6">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                </div>
+
+                <h3 className="text-xl font-semibold mb-2 tracking-tight">
+                  Lär dig använda AI
+                </h3>
+
+                <p className="text-muted-foreground leading-relaxed mb-8">
+                  Prata med AI-chatbotar, skriv bra frågor och få hjälp med allt
+                  från matlagning till jobbsökande.
+                </p>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5" />
+                      20 min
+                    </span>
+                    <span>9 steg</span>
+                  </div>
+
+                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                    Starta
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
+            </Link>
+
+            {/* Safe */}
+            <Link href="/journey/safe" className="block group">
+              <div
+                className={cn(
+                  "journey-card h-full rounded-xl border border-border bg-card p-8 md:p-9",
+                  hoveredCard === "safe" && "border-accent/40"
+                )}
+                onMouseEnter={() => setHoveredCard("safe")}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                <div className="w-11 h-11 rounded-lg bg-accent/10 flex items-center justify-center mb-6">
+                  <Shield className="w-5 h-5 text-accent" />
+                </div>
+
+                <h3 className="text-xl font-semibold mb-2 tracking-tight">
+                  Skydda dig mot AI-hot
+                </h3>
+
+                <p className="text-muted-foreground leading-relaxed mb-8">
+                  Känn igen deepfakes, AI-bedrägerier och röstkloning. Lär dig
+                  skydda dig själv och din familj.
+                </p>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5" />
+                      20 min
+                    </span>
+                    <span>9 steg</span>
+                  </div>
+
+                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                    Starta
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Who is this for — quiet, editorial */}
+      <section className="py-20 md:py-28 px-6 bg-secondary">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-14 tracking-tight">
+            För alla i kommunen
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            <div>
+              <p className="font-semibold mb-2">Pensionärer</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Lär dig använda AI-verktyg och skydda dig mot bedragare som
+                ringer eller skickar meddelanden.
+              </p>
+            </div>
+
+            <div>
+              <p className="font-semibold mb-2">Föräldrar</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Förstå vad dina barn använder och hur du kan hjälpa dem navigera
+                AI säkert.
+              </p>
+            </div>
+
+            <div>
+              <p className="font-semibold mb-2">Alla andra</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Oavsett ålder eller erfarenhet. Ingen förkunskap krävs. Helt
+                gratis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer — minimal */}
+      <footer className="py-10 px-6 border-t border-border">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-6 h-6 rounded bg-primary/10 flex items-center justify-center">
+              <span className="text-primary font-semibold text-[10px]">Ai</span>
+            </div>
+            <span className="text-sm font-medium">AI-kunskapen</span>
+          </div>
+          <p className="text-xs text-muted-foreground text-center">
+            Ett initiativ från Östersunds kommun · Gratis och öppet för alla · 2026
+          </p>
         </div>
       </footer>
     </div>
