@@ -145,7 +145,7 @@ export function ChecklistStep({ type, title, description, items }: ChecklistStep
                 type === "learn" ? "text-primary" : "text-foreground"
               )}
             >
-              [ {allChecked ? "SLUTFOR" : "FORTSATT"} ]
+              [ {allChecked ? "SLUTFÖR" : "FORTSÄTT"} ]
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>

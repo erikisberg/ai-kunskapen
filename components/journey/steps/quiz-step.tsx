@@ -151,7 +151,7 @@ export function QuizStep({ type, title, questions }: QuizStepProps) {
                   type === "learn" ? "text-primary" : "text-foreground"
                 )}
               >
-                [ {isLastQuestion ? "FORTSATT" : "NASTA"} ]
+                [ {isLastQuestion ? "FORTSÄTT" : "NÄSTA"} ]
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>
