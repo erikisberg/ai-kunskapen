@@ -22,7 +22,7 @@ export function CompleteStep({ type }: CompleteStepProps) {
     const duration = 2500
     const end = Date.now() + duration
 
-    const colors = type === "learn" 
+    const colors = type === "learn"
       ? ['#7546FF', '#5a35cc', '#8b6aff']
       : ['#F8FE22', '#d4d91d', '#ffff66']
 
