@@ -1,6 +1,7 @@
-// AI Gateway model — routes through Vercel AI Gateway automatically
-// No API keys needed with OIDC auth (vercel env pull provisions credentials)
-export const EXERCISE_MODEL = "anthropic/claude-haiku-4-5";
+import { gateway } from "ai";
+
+// AI Gateway — routes through Vercel, OIDC auth automatic
+export const exerciseModel = gateway("anthropic/claude-haiku-4.5");
 
 // Default max messages per chat exercise (overridable per slide in CMS)
 export const MAX_MESSAGES_DEFAULT = 10;

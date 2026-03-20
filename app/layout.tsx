@@ -17,10 +17,9 @@ const anton = Anton({
 })
 
 export const metadata: Metadata = {
-  title: 'AI-kunskapen | Östersunds kommun',
-  description: 'Lär dig använda AI i vardagen och skydda dig mot AI-bedrägerier. Gratis utbildning från Östersunds kommun.',
-  keywords: ['AI', 'artificiell intelligens', 'säkerhet', 'deepfakes', 'bedrägerier', 'Östersund', 'utbildning'],
-  authors: [{ name: 'Östersunds kommun' }],
+  title: 'AI-kunskapen',
+  description: 'Lär dig använda AI i vardagen och skydda dig mot AI-bedrägerier. Gratis utbildning för alla.',
+  keywords: ['AI', 'artificiell intelligens', 'säkerhet', 'deepfakes', 'bedrägerier', 'utbildning'],
 }
 
 export const viewport: Viewport = {

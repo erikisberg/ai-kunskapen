@@ -10,16 +10,21 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header — quiet, grounding */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
-        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center">
-              <span className="text-primary font-semibold text-sm">Ai</span>
+      {/* Header — glass, modern */}
+      <header className="fixed top-4 left-4 right-4 z-50">
+        <div className="max-w-5xl mx-auto bg-card/60 backdrop-blur-xl border border-white/20 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.03)] rounded-2xl px-6 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-[11px]">Ai</span>
             </div>
             <span className="font-semibold text-sm tracking-tight">AI-kunskapen</span>
           </div>
-          <span className="text-xs text-muted-foreground">Östersunds kommun</span>
+          <Link
+            href="#kurser"
+            className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Välj kurs
+          </Link>
         </div>
       </header>
 
@@ -27,7 +32,7 @@ export default function HomePage() {
       <section className="min-h-[85vh] flex items-center justify-center px-6 pt-20">
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-sm font-medium text-primary mb-6 tracking-wide uppercase">
-            Gratis för alla i kommunen
+            Gratis för alla
           </p>
 
           <h1 className="font-[family-name:var(--font-display)] text-[clamp(2.5rem,8vw,5rem)] leading-[0.95] tracking-[-0.035em] uppercase mb-6">
@@ -161,7 +166,7 @@ export default function HomePage() {
       <section className="py-20 md:py-28 px-6 bg-secondary">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-semibold mb-14 tracking-tight">
-            För alla i kommunen
+            För alla
           </h2>
 
           <div className="grid md:grid-cols-3 gap-10">
@@ -202,7 +207,7 @@ export default function HomePage() {
             <span className="text-sm font-medium">AI-kunskapen</span>
           </div>
           <p className="text-xs text-muted-foreground text-center">
-            Ett initiativ från Östersunds kommun · Gratis och öppet för alla · 2026
+            Gratis och öppet för alla · 2026
           </p>
         </div>
       </footer>

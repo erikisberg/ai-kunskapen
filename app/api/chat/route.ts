@@ -1,7 +1,6 @@
 import { streamText, convertToModelMessages, validateUIMessages } from "ai";
-import { EXERCISE_MODEL, MAX_MESSAGES_DEFAULT, RATE_LIMIT } from "@/lib/ai";
+import { exerciseModel, MAX_MESSAGES_DEFAULT, RATE_LIMIT } from "@/lib/ai";
 
-// Simple in-memory rate limiter
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
 function checkRateLimit(ip: string): boolean {
@@ -33,7 +32,6 @@ export async function POST(req: Request) {
 
   const { messages, systemPrompt, maxMessages } = await req.json();
 
-  // Enforce message limit
   const limit = maxMessages || MAX_MESSAGES_DEFAULT;
   const userMessages = messages.filter((m: { role: string }) => m.role === "user");
   if (userMessages.length > limit) {
@@ -44,7 +42,7 @@ export async function POST(req: Request) {
   const modelMessages = await convertToModelMessages(validatedMessages);
 
   const result = streamText({
-    model: EXERCISE_MODEL as any,
+    model: exerciseModel,
     system:
       systemPrompt ||
       "Du är en hjälpsam AI-assistent som hjälper användaren lära sig om AI. Svara på svenska. Håll svaren korta och pedagogiska.",
