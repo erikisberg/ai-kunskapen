@@ -40,6 +40,7 @@ export type SlideType =
   | "llm_chat"
   | "quiz"
   | "scenario"
+  | "flow"
   | "checklist";
 
 export type Slide = {
