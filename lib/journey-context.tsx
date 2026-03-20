@@ -21,7 +21,7 @@ export interface JourneyProgress {
 interface JourneyContextType {
   journeyType: JourneyType | null
   progress: JourneyProgress
-  setJourneyType: (type: JourneyType) => void
+  setJourneyType: (type: JourneyType, customSteps?: Step[]) => void
   goToStep: (stepIndex: number) => void
   nextStep: () => void
   previousStep: () => void
@@ -67,8 +67,8 @@ export function JourneyProvider({ children }: { children: ReactNode }) {
   const [journeyType, setJourneyTypeState] = useState<JourneyType | null>(null)
   const [progress, setProgress] = useState<JourneyProgress>(defaultProgress)
 
-  const setJourneyType = useCallback((type: JourneyType) => {
-    const steps = type === "learn" ? learnSteps : safeSteps
+  const setJourneyType = useCallback((type: JourneyType, customSteps?: Step[]) => {
+    const steps = customSteps || (type === "learn" ? learnSteps : safeSteps)
     setJourneyTypeState(type)
     setProgress({
       currentStep: 0,
