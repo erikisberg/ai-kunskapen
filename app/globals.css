@@ -1,0 +1,179 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Bold editorial palette from inspiration */
+  --background: #FAF5EC; /* warm cream */
+  --foreground: #16181B; /* near black */
+  --card: #FFFFFF;
+  --card-foreground: #16181B;
+  --popover: #FFFFFF;
+  --popover-foreground: #16181B;
+  --primary: #7546FF; /* bold purple */
+  --primary-foreground: #FFFFFF;
+  --secondary: #F8F8EF; /* off-white */
+  --secondary-foreground: #16181B;
+  --muted: #F8F8EF;
+  --muted-foreground: #16181B70;
+  --accent: #F8FE22; /* neon yellow */
+  --accent-foreground: #16181B;
+  --destructive: #E53935;
+  --destructive-foreground: #FFFFFF;
+  --border: #16181B20;
+  --input: #16181B10;
+  --ring: #7546FF;
+  
+  /* Journey colors */
+  --journey-learn: #7546FF; /* purple */
+  --journey-safe: #F8FE22; /* neon yellow */
+  
+  --chart-1: #7546FF;
+  --chart-2: #F8FE22;
+  --chart-3: #16181B;
+  --chart-4: #FAF5EC;
+  --chart-5: #FFFFFF;
+  --radius: 0.75rem;
+  --sidebar: #FAF5EC;
+  --sidebar-foreground: #16181B;
+  --sidebar-primary: #7546FF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F8F8EF;
+  --sidebar-accent-foreground: #16181B;
+  --sidebar-border: #16181B20;
+  --sidebar-ring: #7546FF;
+}
+
+.dark {
+  --background: #111111;
+  --foreground: #FFFFFF;
+  --card: #16181B;
+  --card-foreground: #FFFFFF;
+  --popover: #16181B;
+  --popover-foreground: #FFFFFF;
+  --primary: #7546FF;
+  --primary-foreground: #FFFFFF;
+  --secondary: #1E1E1E;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1E1E1E;
+  --muted-foreground: #FFFFFF70;
+  --accent: #F8FE22;
+  --accent-foreground: #16181B;
+  --destructive: #E53935;
+  --destructive-foreground: #FFFFFF;
+  --border: #FFFFFF20;
+  --input: #FFFFFF10;
+  --ring: #7546FF;
+  --journey-learn: #7546FF;
+  --journey-safe: #F8FE22;
+  --chart-1: #7546FF;
+  --chart-2: #F8FE22;
+  --chart-3: #FFFFFF;
+  --chart-4: #111111;
+  --chart-5: #16181B;
+  --sidebar: #111111;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #7546FF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1E1E1E;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #FFFFFF20;
+  --sidebar-ring: #7546FF;
+}
+
+@theme inline {
+  --font-sans: 'Inter', 'Inter Fallback', sans-serif;
+  --font-display: 'Anton SC', 'Anton SC Fallback', sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-journey-learn: var(--journey-learn);
+  --color-journey-safe: var(--journey-safe);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius));
+  --radius-md: calc(var(--radius));
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius));
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Bold display typography */
+.display-heading {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+}
+
+/* Button bracket style */
+.bracket-cta {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+/* Animations */
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+/* Card hover states */
+.journey-card {
+  transition: all 0.3s ease;
+}
+
+.journey-card:hover {
+  transform: translateY(-4px);
+}
