@@ -1,5 +1,7 @@
 import { streamText, convertToModelMessages } from "ai";
 import { exerciseModel, MAX_MESSAGES_DEFAULT, RATE_LIMIT } from "@/lib/ai";
+import { auth } from "@/lib/auth";
+import { eq } from "drizzle-orm";
 
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
@@ -18,6 +20,49 @@ function checkRateLimit(ip: string): boolean {
 
   entry.count++;
   return true;
+}
+
+async function getOrgContext(): Promise<string> {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) return "";
+
+    const { db } = await import("@/lib/db");
+    const schema = await import("@/lib/schema");
+
+    const [user] = await db
+      .select({ orgId: schema.users.orgId })
+      .from(schema.users)
+      .where(eq(schema.users.id, session.user.id))
+      .limit(1);
+
+    if (!user?.orgId) return "";
+
+    const [org] = await db
+      .select({
+        name: schema.organizations.name,
+        industry: schema.organizations.industry,
+        description: schema.organizations.description,
+        employeeCount: schema.organizations.employeeCount,
+        aiContext: schema.organizations.aiContext,
+      })
+      .from(schema.organizations)
+      .where(eq(schema.organizations.id, user.orgId))
+      .limit(1);
+
+    if (!org) return "";
+
+    const parts: string[] = [];
+    parts.push(`Användaren jobbar på ${org.name}.`);
+    if (org.industry) parts.push(`Bransch: ${org.industry}.`);
+    if (org.description) parts.push(`Om företaget: ${org.description}`);
+    if (org.employeeCount) parts.push(`Antal anställda: ca ${org.employeeCount}.`);
+    if (org.aiContext) parts.push(org.aiContext);
+
+    return parts.join(" ");
+  } catch {
+    return "";
+  }
 }
 
 export async function POST(req: Request) {
@@ -45,13 +90,20 @@ export async function POST(req: Request) {
   }
 
   try {
+    const orgContext = await getOrgContext();
     const modelMessages = await convertToModelMessages(messages);
+
+    const basePrompt =
+      systemPrompt ||
+      "Du är en hjälpsam AI-assistent som hjälper användaren lära sig om AI. Svara på svenska. Håll svaren korta och pedagogiska.";
+
+    const fullPrompt = orgContext
+      ? `${basePrompt}\n\nKontext om användarens arbetsplats: ${orgContext}\n\nAnpassa dina exempel och svar till denna bransch och organisation när det är relevant, men var inte påträngande med det.`
+      : basePrompt;
 
     const result = streamText({
       model: exerciseModel,
-      system:
-        systemPrompt ||
-        "Du är en hjälpsam AI-assistent som hjälper användaren lära sig om AI. Svara på svenska. Håll svaren korta och pedagogiska.",
+      system: fullPrompt,
       messages: modelMessages,
     });
 

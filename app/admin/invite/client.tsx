@@ -17,6 +17,9 @@ export function InviteClient({ orgs }: { orgs: Org[] }) {
   const [selectedOrg, setSelectedOrg] = useState(orgs[0]?.id || "");
   const [emails, setEmails] = useState("");
   const [newOrgName, setNewOrgName] = useState("");
+  const [newOrgIndustry, setNewOrgIndustry] = useState("");
+  const [newOrgDescription, setNewOrgDescription] = useState("");
+  const [newOrgEmployeeCount, setNewOrgEmployeeCount] = useState("");
   const [showNewOrg, setShowNewOrg] = useState(orgs.length === 0);
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<{
@@ -40,6 +43,9 @@ export function InviteClient({ orgs }: { orgs: Org[] }) {
         body: JSON.stringify({
           orgId: showNewOrg ? undefined : selectedOrg,
           newOrgName: showNewOrg ? newOrgName : undefined,
+          newOrgIndustry: showNewOrg ? newOrgIndustry : undefined,
+          newOrgDescription: showNewOrg ? newOrgDescription : undefined,
+          newOrgEmployeeCount: showNewOrg && newOrgEmployeeCount ? parseInt(newOrgEmployeeCount) : undefined,
           emails: emailList,
         }),
       });
@@ -100,7 +106,7 @@ export function InviteClient({ orgs }: { orgs: Org[] }) {
               </button>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Building2 className="w-4 h-4 text-muted-foreground" />
                 <input
@@ -111,6 +117,27 @@ export function InviteClient({ orgs }: { orgs: Org[] }) {
                   className="flex-1 px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground"
                 />
               </div>
+              <input
+                type="text"
+                value={newOrgIndustry}
+                onChange={(e) => setNewOrgIndustry(e.target.value)}
+                placeholder="Bransch (t.ex. Bygg, Vård, IT, Finans)"
+                className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground"
+              />
+              <textarea
+                value={newOrgDescription}
+                onChange={(e) => setNewOrgDescription(e.target.value)}
+                placeholder="Kort beskrivning av vad företaget gör (används för att anpassa AI-svar)"
+                rows={2}
+                className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground text-sm resize-y"
+              />
+              <input
+                type="number"
+                value={newOrgEmployeeCount}
+                onChange={(e) => setNewOrgEmployeeCount(e.target.value)}
+                placeholder="Antal anställda (ungefär)"
+                className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground"
+              />
               {orgs.length > 0 && (
                 <button
                   onClick={() => setShowNewOrg(false)}

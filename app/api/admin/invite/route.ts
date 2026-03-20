@@ -27,6 +27,9 @@ export async function POST(req: NextRequest) {
   const { orgId, newOrgName, emails } = body as {
     orgId?: string;
     newOrgName?: string;
+    newOrgIndustry?: string;
+    newOrgDescription?: string;
+    newOrgEmployeeCount?: number;
     emails: string[];
   };
 
@@ -51,7 +54,13 @@ export async function POST(req: NextRequest) {
     const slug = slugify(newOrgName);
     const [newOrg] = await db
       .insert(schema.organizations)
-      .values({ name: newOrgName.trim(), slug })
+      .values({
+        name: newOrgName.trim(),
+        slug,
+        industry: body.newOrgIndustry?.trim() || null,
+        description: body.newOrgDescription?.trim() || null,
+        employeeCount: body.newOrgEmployeeCount || null,
+      })
       .returning();
     resolvedOrgId = newOrg.id;
   }

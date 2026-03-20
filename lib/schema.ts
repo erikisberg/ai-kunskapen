@@ -26,6 +26,10 @@ export const organizations = pgTable("organizations", {
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
   logoUrl: text("logo_url"),
+  industry: text("industry"),           // "Bygg", "Vård", "IT", etc.
+  description: text("description"),      // Kort om vad företaget gör
+  employeeCount: integer("employee_count"),
+  aiContext: text("ai_context"),         // Extra kontext för LLM-prompter
   charityName: text("charity_name"),
   pricePerUser: integer("price_per_user").default(20000), // öre (200 kr)
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
