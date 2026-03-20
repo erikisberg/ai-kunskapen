@@ -63,7 +63,7 @@ export function QuizStep({ type, title, questions }: QuizStepProps) {
             </div>
 
             {/* Question */}
-            <div className="border-2 border-foreground bg-card p-6 md:p-8 mb-6">
+            <div className="border border-border bg-card p-6 md:p-8 mb-6">
               <p className="text-xl md:text-2xl font-medium mb-8 leading-relaxed">
                 {question.question}
               </p>
@@ -75,9 +75,9 @@ export function QuizStep({ type, title, questions }: QuizStepProps) {
                     onClick={() => handleSelectAnswer(index)}
                     disabled={showResult}
                     className={cn(
-                      "w-full text-left p-5 border-2 transition-all",
+                      "w-full text-left p-5 border rounded-lg transition-all",
                       "focus:outline-none focus:ring-2 focus:ring-foreground",
-                      !showResult && "hover:bg-secondary/50 border-foreground/30 hover:border-foreground",
+                      !showResult && "hover:bg-secondary/50 border-border hover:border-foreground/30",
                       showResult && index === question.correctIndex && "border-primary bg-primary/10",
                       showResult && selectedAnswer === index && index !== question.correctIndex && "border-destructive bg-destructive/10",
                       !showResult && selectedAnswer === index && type === "learn" && "border-primary bg-primary/5",
@@ -86,10 +86,10 @@ export function QuizStep({ type, title, questions }: QuizStepProps) {
                   >
                     <div className="flex items-center gap-4">
                       <div className={cn(
-                        "w-10 h-10 flex items-center justify-center text-sm font-bold flex-shrink-0 border-2",
+                        "w-10 h-10 flex items-center justify-center text-sm font-bold flex-shrink-0 border rounded-lg",
                         showResult && index === question.correctIndex && "bg-primary text-primary-foreground border-primary",
                         showResult && selectedAnswer === index && index !== question.correctIndex && "bg-destructive text-destructive-foreground border-destructive",
-                        !showResult && "border-foreground"
+                        !showResult && "border-foreground/20"
                       )}>
                         {showResult && index === question.correctIndex ? (
                           <Check className="w-5 h-5" />
@@ -109,7 +109,7 @@ export function QuizStep({ type, title, questions }: QuizStepProps) {
             {/* Explanation */}
             {showResult && (
               <div className={cn(
-                "border-2 animate-slide-up p-6",
+                "border rounded-lg animate-slide-up p-6",
                 isCorrect ? "border-primary bg-primary/5" : "border-accent bg-accent/20"
               )}>
                 <div className="flex items-start gap-4">
@@ -138,7 +138,7 @@ export function QuizStep({ type, title, questions }: QuizStepProps) {
 
       {/* Fixed bottom action */}
       {showResult && (
-        <div className="sticky bottom-0 bg-background border-t-2 border-foreground py-4">
+        <div className="sticky bottom-0 bg-background border-t border-border py-4">
           <div className="px-4 md:px-8">
             <div className="max-w-2xl mx-auto flex justify-between items-center">
               <span className="text-sm text-muted-foreground">

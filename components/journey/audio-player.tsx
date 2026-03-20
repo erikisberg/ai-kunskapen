@@ -19,7 +19,6 @@ export function AudioPlayer({ text, className }: AudioPlayerProps) {
       setIsSupported(false)
       return
     }
-
     return () => {
       if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
         window.speechSynthesis.cancel()
@@ -29,7 +28,6 @@ export function AudioPlayer({ text, className }: AudioPlayerProps) {
 
   const handlePlayPause = () => {
     if (!isSupported) return
-
     if (isPlaying) {
       window.speechSynthesis.cancel()
       setIsPlaying(false)
@@ -38,55 +36,38 @@ export function AudioPlayer({ text, className }: AudioPlayerProps) {
       utterance.lang = 'sv-SE'
       utterance.rate = 0.9
       utterance.pitch = 1
-
       const voices = window.speechSynthesis.getVoices()
       const swedishVoice = voices.find(voice => voice.lang.startsWith('sv'))
-      if (swedishVoice) {
-        utterance.voice = swedishVoice
-      }
-
-      utterance.onend = () => {
-        setIsPlaying(false)
-      }
-
-      utterance.onerror = () => {
-        setIsPlaying(false)
-      }
-
+      if (swedishVoice) utterance.voice = swedishVoice
+      utterance.onend = () => setIsPlaying(false)
+      utterance.onerror = () => setIsPlaying(false)
       utteranceRef.current = utterance
       window.speechSynthesis.speak(utterance)
       setIsPlaying(true)
     }
   }
 
-  if (!isSupported) {
-    return null
-  }
+  if (!isSupported) return null
 
   return (
-    <div className={cn("flex flex-col items-start gap-2", className)}>
+    <div className={cn("flex items-center", className)}>
       <button
         onClick={handlePlayPause}
         className={cn(
-          "flex items-center gap-3 px-4 py-2.5 border-2 transition-colors",
-          isPlaying 
-            ? "border-primary bg-primary text-primary-foreground" 
-            : "border-foreground/20 bg-transparent hover:border-foreground/40"
+          "inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all",
+          isPlaying
+            ? "bg-primary text-primary-foreground"
+            : "bg-foreground/5 text-muted-foreground hover:bg-foreground/10 hover:text-foreground"
         )}
         aria-label={isPlaying ? "Stoppa uppläsning" : "Lyssna på texten"}
       >
         {isPlaying ? (
-          <Pause className="w-4 h-4" />
+          <Pause className="w-3.5 h-3.5" />
         ) : (
-          <Volume2 className="w-4 h-4" />
+          <Volume2 className="w-3.5 h-3.5" />
         )}
-        <span className="text-sm font-medium">
-          {isPlaying ? "Stoppa" : "Lyssna"}
-        </span>
+        {isPlaying ? "Stoppa" : "Lyssna"}
       </button>
-      <p className="text-xs text-foreground/50">
-        Klicka för att få texten uppläst
-      </p>
     </div>
   )
 }

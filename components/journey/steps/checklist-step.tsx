@@ -61,8 +61,8 @@ export function ChecklistStep({ type, title, description, items }: ChecklistStep
             </div>
 
             {/* Checklist Card */}
-            <div className="border-2 border-foreground mb-8 overflow-hidden">
-              <div className="divide-y-2 divide-foreground">
+            <div className="border border-border mb-8 overflow-hidden">
+              <div className="divide-y divide-border">
                 {items.map((item, index) => (
                   <button
                     key={item.id}
@@ -71,12 +71,12 @@ export function ChecklistStep({ type, title, description, items }: ChecklistStep
                   >
                     <div className="flex items-start gap-4">
                       <div className={cn(
-                        "w-7 h-7 border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all",
+                        "w-7 h-7 border flex items-center justify-center flex-shrink-0 mt-0.5 transition-all",
                         checkedItems.has(item.id) 
                           ? type === "learn" 
                             ? "bg-primary border-primary text-primary-foreground" 
                             : "bg-accent border-accent text-accent-foreground"
-                          : "border-foreground"
+                          : "border-foreground/30"
                       )}>
                         {checkedItems.has(item.id) && (
                           <Check className="w-4 h-4" />
@@ -108,7 +108,7 @@ export function ChecklistStep({ type, title, description, items }: ChecklistStep
             <div className="flex items-center justify-center gap-4">
               <button
                 onClick={handleCopy}
-                className="inline-flex items-center gap-2 px-6 py-3 border-2 border-foreground hover:bg-secondary transition-colors font-[family-name:var(--font-display)] text-sm tracking-[-0.02em] uppercase"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-border hover:bg-secondary transition-colors font-[family-name:var(--font-display)] text-sm tracking-[-0.02em] uppercase"
               >
                 {copied ? (
                   <>
@@ -135,7 +135,7 @@ export function ChecklistStep({ type, title, description, items }: ChecklistStep
       </div>
 
       {/* Fixed bottom action */}
-      <div className="sticky bottom-0 bg-background border-t-2 border-foreground py-4">
+      <div className="sticky bottom-0 bg-background/80 backdrop-blur-xl border-t border-border py-4">
         <div className="px-4 md:px-8">
           <div className="max-w-2xl mx-auto flex justify-end">
             <button 

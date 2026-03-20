@@ -60,7 +60,7 @@ export function ScenarioStep({
           <div className="max-w-2xl mx-auto">
             {/* Header */}
             <div className="flex items-center gap-4 mb-8">
-              <div className="w-14 h-14 flex items-center justify-center bg-accent text-accent-foreground border-2 border-foreground">
+              <div className="w-14 h-14 flex items-center justify-center bg-accent text-accent-foreground border border-border">
                 <AlertTriangle className="w-7 h-7" />
               </div>
               <div>
@@ -70,10 +70,10 @@ export function ScenarioStep({
             </div>
 
             {/* Scenario Card */}
-            <div className="mb-8 border-2 border-foreground overflow-hidden">
+            <div className="mb-8 border border-border overflow-hidden">
               {/* Scenario Header */}
-              <div className="flex items-center gap-3 p-4 bg-secondary border-b-2 border-foreground">
-                <div className="w-10 h-10 bg-card flex items-center justify-center border-2 border-foreground">
+              <div className="flex items-center gap-3 p-4 bg-secondary border-b border-border">
+                <div className="w-10 h-10 bg-card flex items-center justify-center border border-border">
                   <ScenarioIcon className="w-5 h-5" />
                 </div>
                 <div className="flex-1">
@@ -103,9 +103,9 @@ export function ScenarioStep({
                     onClick={() => handleSelectChoice(index)}
                     disabled={showResult}
                     className={cn(
-                      "w-full text-left p-5 border-2 transition-all",
+                      "w-full text-left p-5 border rounded-lg transition-all",
                       "focus:outline-none focus:ring-2 focus:ring-foreground",
-                      !showResult && "hover:bg-secondary/50 border-foreground/30 hover:border-foreground",
+                      !showResult && "hover:bg-secondary/50 border-border hover:border-foreground/30",
                       showResult && choice.isCorrect && "border-primary bg-primary/10",
                       showResult && selectedChoice === index && !choice.isCorrect && "border-destructive bg-destructive/10",
                       !showResult && "border-foreground/30"
@@ -137,7 +137,7 @@ export function ScenarioStep({
             {/* Feedback */}
             {showResult && selectedChoice !== null && (
               <div className={cn(
-                "border-2 animate-slide-up p-6",
+                "border rounded-lg animate-slide-up p-6",
                 selectedIsCorrect ? "border-primary bg-primary/5" : "border-accent bg-accent/20"
               )}>
                 <div className="flex items-start gap-4">
@@ -166,14 +166,14 @@ export function ScenarioStep({
 
       {/* Fixed bottom action */}
       {showResult && (
-        <div className="sticky bottom-0 bg-background border-t-2 border-foreground py-4">
+        <div className="sticky bottom-0 bg-background border-t border-border py-4">
           <div className="px-4 md:px-8">
             <div className="max-w-2xl mx-auto flex justify-end">
               <button 
                 onClick={handleContinue}
                 className="inline-flex items-center gap-2 font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase transition-opacity hover:opacity-80"
               >
-                [ FORTSATT ]
+                Fortsätt
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>

@@ -145,7 +145,7 @@ export function ChatStep({
             </div>
 
             {/* Chat Card */}
-            <div className="border-2 border-foreground overflow-hidden">
+            <div className="border border-border overflow-hidden">
               {/* Chat Messages */}
               <div className="h-80 md:h-96 overflow-auto p-4 space-y-4 bg-secondary/30">
                 {displayMessages.map((message, index) => (
@@ -157,7 +157,7 @@ export function ChatStep({
                     )}
                   >
                     <div className={cn(
-                      "w-10 h-10 flex items-center justify-center flex-shrink-0 border-2 border-foreground",
+                      "w-10 h-10 flex items-center justify-center flex-shrink-0 border border-border",
                       message.role === "assistant" ? "bg-primary text-primary-foreground" : "bg-foreground text-background"
                     )}>
                       {message.role === "assistant" ? (
@@ -169,7 +169,7 @@ export function ChatStep({
                     <div className={cn(
                       "flex-1 max-w-[80%] p-4",
                       message.role === "assistant"
-                        ? "bg-card border-2 border-foreground"
+                        ? "bg-card border border-border"
                         : "bg-primary text-primary-foreground"
                     )}>
                       <div className="text-sm leading-relaxed">{renderMarkdown(message.content)}</div>
@@ -179,10 +179,10 @@ export function ChatStep({
 
                 {isLoading && (
                   <div className="flex gap-3">
-                    <div className="w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center flex-shrink-0 border-2 border-foreground">
+                    <div className="w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center flex-shrink-0 border border-border">
                       <Sparkles className="w-5 h-5" />
                     </div>
-                    <div className="bg-card border-2 border-foreground p-4">
+                    <div className="bg-card border border-border p-4">
                       <div className="flex gap-1.5">
                         <span className="w-2 h-2 bg-foreground/40 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
                         <span className="w-2 h-2 bg-foreground/40 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
@@ -197,14 +197,14 @@ export function ChatStep({
 
               {/* Suggested Prompts */}
               {userMessageCount === 0 && (
-                <div className="px-4 py-3 border-t-2 border-foreground bg-secondary/50">
+                <div className="px-4 py-3 border-t border-border bg-secondary/50">
                   <p className="text-xs font-[family-name:var(--font-display)] tracking-[-0.02em] uppercase text-muted-foreground mb-2">PROVA ATT SÄGA:</p>
                   <div className="flex flex-wrap gap-2">
                     {suggestedPrompts.map((prompt, index) => (
                       <button
                         key={index}
                         onClick={() => handleSend(prompt)}
-                        className="text-sm px-4 py-2 border-2 border-foreground bg-card hover:bg-secondary transition-colors font-medium"
+                        className="text-sm px-4 py-2 border border-border bg-card hover:bg-secondary transition-colors font-medium"
                       >
                         {prompt}
                       </button>
@@ -214,7 +214,7 @@ export function ChatStep({
               )}
 
               {/* Input */}
-              <div className="p-4 border-t-2 border-foreground bg-card">
+              <div className="p-4 border-t border-border bg-card">
                 {reachedLimit ? (
                   <p className="text-center text-muted-foreground py-2">
                     Du har nått maxgränsen på {maxMessages} meddelanden. Klicka fortsätt!
@@ -229,13 +229,13 @@ export function ChatStep({
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                       placeholder="Skriv ett meddelande..."
-                      className="flex-1 px-5 py-3 border-2 border-foreground bg-background focus:outline-none focus:ring-2 focus:ring-foreground"
+                      className="flex-1 px-5 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-foreground"
                       disabled={isLoading}
                     />
                     <button
                       type="submit"
                       disabled={!inputValue.trim() || isLoading}
-                      className="w-12 h-12 bg-primary text-primary-foreground flex items-center justify-center border-2 border-foreground disabled:opacity-50"
+                      className="w-12 h-12 bg-primary text-primary-foreground flex items-center justify-center border border-border disabled:opacity-50"
                     >
                       <Send className="w-5 h-5" />
                       <span className="sr-only">Skicka</span>
@@ -262,7 +262,7 @@ export function ChatStep({
 
       {/* Fixed bottom action */}
       {canContinue && (
-        <div className="sticky bottom-0 bg-background border-t-2 border-foreground py-4">
+        <div className="sticky bottom-0 bg-background border-t border-border py-4">
           <div className="px-4 md:px-8">
             <div className="max-w-2xl mx-auto flex justify-between items-center">
               <span className="text-sm text-muted-foreground">

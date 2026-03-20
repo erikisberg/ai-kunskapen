@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { ArrowLeft, X, BookOpen, Shield } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { useJourney, type JourneyType } from "@/lib/journey-context"
 import { ProgressBar } from "./progress-bar"
 import { cn } from "@/lib/utils"
@@ -18,39 +17,43 @@ export function JourneyLayout({ children, type }: JourneyLayoutProps) {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-background border-b-2 border-foreground">
-        <div className="px-4 md:px-8 py-3 md:py-4">
+      {/* Header — matching glass style from landing */}
+      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
+        <div className="px-4 md:px-8 py-3">
           <div className="flex items-center justify-between gap-4">
-            {/* Back / Logo */}
-            <div className="flex items-center gap-4">
+            {/* Back / Close */}
+            <div className="flex items-center gap-3">
               {isFirstStep ? (
-                <Button variant="ghost" size="icon" className="rounded-xl border-2 border-foreground" asChild>
-                  <Link href="/">
-                    <X className="w-5 h-5" />
-                    <span className="sr-only">Stang</span>
-                  </Link>
-                </Button>
+                <Link
+                  href="/"
+                  className="w-9 h-9 flex items-center justify-center rounded-lg border border-border hover:bg-secondary transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                  <span className="sr-only">Stäng</span>
+                </Link>
               ) : (
-                <Button variant="ghost" size="icon" className="rounded-xl border-2 border-foreground" onClick={previousStep}>
-                  <ArrowLeft className="w-5 h-5" />
+                <button
+                  onClick={previousStep}
+                  className="w-9 h-9 flex items-center justify-center rounded-lg border border-border hover:bg-secondary transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
                   <span className="sr-only">Tillbaka</span>
-                </Button>
+                </button>
               )}
-              
-              <div className="hidden sm:flex items-center gap-3">
+
+              <div className="hidden sm:flex items-center gap-2.5">
                 <div className={cn(
-                  "w-10 h-10 flex items-center justify-center border-2 border-foreground rounded-xl",
-                  type === "learn" ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
+                  "w-8 h-8 flex items-center justify-center rounded-lg",
+                  type === "learn" ? "bg-primary/10 text-primary" : "bg-accent/20 text-accent-foreground"
                 )}>
                   {type === "learn" ? (
-                    <BookOpen className="w-5 h-5" />
+                    <BookOpen className="w-4 h-4" />
                   ) : (
-                    <Shield className="w-5 h-5" />
+                    <Shield className="w-4 h-4" />
                   )}
                 </div>
-                <span className="text-sm font-semibold uppercase tracking-wide">
-                  {type === "learn" ? "Anvand AI" : "Skydda dig"}
+                <span className="text-sm font-medium">
+                  {type === "learn" ? "Använd AI" : "Skydda dig"}
                 </span>
               </div>
             </div>
@@ -61,11 +64,11 @@ export function JourneyLayout({ children, type }: JourneyLayoutProps) {
             </div>
 
             {/* Exit */}
-            <Link 
+            <Link
               href="/"
-              className="text-sm font-semibold uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors"
+              className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
-              [ Avsluta ]
+              Avsluta
             </Link>
           </div>
         </div>

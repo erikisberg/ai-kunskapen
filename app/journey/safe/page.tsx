@@ -1,39 +1,13 @@
-"use client"
+import { getCourseData } from "@/lib/course-data"
+import { SafeJourneyClient } from "./client"
 
-import { useEffect, useState } from "react"
-import { JourneyProvider } from "@/lib/journey-context"
-import { DynamicJourney } from "@/components/journey/dynamic-journey"
-import type { CourseData } from "@/lib/course-data"
-
-export default function SafeJourneyPage() {
-  const [courseData, setCourseData] = useState<CourseData | null>(null)
-
-  useEffect(() => {
-    async function load() {
-      const { getCourseData } = await import("@/lib/course-data")
-      const data = await getCourseData("risken-med-ai")
-      setCourseData(data)
-    }
-    load()
-  }, [])
-
-  if (!courseData) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center">
-          <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground">Laddar kurs...</p>
-        </div>
-      </div>
-    )
-  }
+export default async function SafeJourneyPage() {
+  const courseData = await getCourseData("risken-med-ai")
 
   return (
-    <JourneyProvider>
-      <DynamicJourney
-        journeyType={courseData.journeyType}
-        steps={courseData.steps}
-      />
-    </JourneyProvider>
+    <SafeJourneyClient
+      journeyType={courseData.journeyType}
+      steps={courseData.steps}
+    />
   )
 }

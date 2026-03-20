@@ -17,57 +17,60 @@ export function IntroStep({ type }: IntroStepProps) {
   }
 
   return (
-    <div className="flex-1 flex items-center justify-center px-4 py-12">
+    <div className="flex-1 flex items-center justify-center px-6 py-12">
       <div className="max-w-2xl text-center animate-slide-up">
         <div className={cn(
-          "w-24 h-24 flex items-center justify-center mx-auto mb-10 border-2 border-foreground",
-          type === "learn" ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
+          "w-16 h-16 flex items-center justify-center mx-auto mb-10 rounded-xl",
+          type === "learn" ? "bg-primary/10 text-primary" : "bg-accent/20 text-accent-foreground"
         )}>
           {type === "learn" ? (
-            <BookOpen className="w-10 h-10" />
+            <BookOpen className="w-7 h-7" />
           ) : (
-            <Shield className="w-10 h-10" />
+            <Shield className="w-7 h-7" />
           )}
         </div>
 
-        <h1 className="font-[family-name:var(--font-display)] text-[clamp(2.5rem,8vw,5rem)] leading-[0.9] tracking-[-0.045em] uppercase mb-8">
-          {type === "learn" 
-            ? <>VALKOMMEN TILL<br /><span className="text-primary">DIN AI-RESA</span></> 
-            : <>LAR DIG<br /><span className="text-primary">SKYDDA DIG</span></>
+        <h1 className="font-[family-name:var(--font-display)] text-[clamp(2.5rem,8vw,5rem)] leading-[1.1] tracking-[-0.035em] uppercase mb-8">
+          {type === "learn"
+            ? <>Välkommen till<br /><span className="text-primary">din AI-resa</span></>
+            : <>Lär dig<br /><span className="text-primary">skydda dig</span></>
           }
         </h1>
 
         <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-lg mx-auto leading-relaxed">
           {type === "learn"
-            ? "Under de kommande minuterna kommer du att lara dig grunderna i hur du pratar med AI-chatbotar och hur du kan anvanda dem i din vardag."
-            : "Under de kommande minuterna kommer du att lara dig kanna igen AI-baserade bedragarier, deepfakes och hur du skyddar dig sjalv och din familj."
+            ? "Under de kommande minuterna kommer du att lära dig grunderna i hur du pratar med AI-chatbotar och hur du kan använda dem i din vardag."
+            : "Under de kommande minuterna kommer du att lära dig känna igen AI-baserade bedrägerier, deepfakes och hur du skyddar dig själv och din familj."
           }
         </p>
 
-        <div className="flex items-center justify-center gap-8 mb-12 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Clock className="w-5 h-5" />
+        <div className="flex items-center justify-center gap-6 mb-12 text-sm text-muted-foreground">
+          <div className="flex items-center gap-1.5">
+            <Clock className="w-4 h-4" />
             <span>ca 20 minuter</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5" />
-            <span>{type === "learn" ? "Praktiska ovningar" : "Verkliga scenarion"}</span>
+          <span className="text-foreground/10">·</span>
+          <div className="flex items-center gap-1.5">
+            <Sparkles className="w-4 h-4" />
+            <span>{type === "learn" ? "Praktiska övningar" : "Verkliga scenarion"}</span>
           </div>
         </div>
 
-        <button 
+        <button
           onClick={handleStart}
           className={cn(
-            "inline-flex items-center gap-3 font-[family-name:var(--font-display)] text-xl tracking-[-0.02em] uppercase transition-opacity hover:opacity-80",
-            type === "learn" ? "text-primary" : "text-accent"
+            "inline-flex items-center gap-2.5 px-8 py-4 rounded-full font-medium text-lg transition-all hover:scale-[1.02]",
+            type === "learn"
+              ? "bg-primary text-primary-foreground hover:bg-primary/90"
+              : "bg-accent text-accent-foreground hover:bg-accent/90"
           )}
         >
-          [ VI BORJAR ]
+          Vi börjar
           <ArrowRight className="w-5 h-5" />
         </button>
 
         <p className="mt-10 text-sm text-muted-foreground">
-          Du kan pausa nar du vill och fortsatta senare.
+          Du kan pausa när du vill och fortsätta senare.
         </p>
       </div>
     </div>
