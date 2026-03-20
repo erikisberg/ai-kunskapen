@@ -5,7 +5,31 @@ import {
   uuid,
   primaryKey,
   integer,
+  boolean,
+  pgEnum,
 } from "drizzle-orm/pg-core";
+
+// --- Enums ---
+
+export const invitationStatusEnum = pgEnum("invitation_status", [
+  "pending",
+  "accepted",
+  "expired",
+]);
+
+export const userRoleEnum = pgEnum("user_role", ["user", "admin"]);
+
+// --- Organizations ---
+
+export const organizations = pgTable("organizations", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+  logoUrl: text("logo_url"),
+  charityName: text("charity_name"),
+  pricePerUser: integer("price_per_user").default(20000), // öre (200 kr)
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+});
 
 // --- Auth.js required tables ---
 
@@ -15,6 +39,9 @@ export const users = pgTable("users", {
   emailVerified: timestamp("email_verified", { mode: "date" }),
   name: text("name"),
   image: text("image"),
+  orgId: uuid("org_id").references(() => organizations.id),
+  role: userRoleEnum("role").default("user").notNull(),
+  onboarded: boolean("onboarded").default(false).notNull(),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 });
 
@@ -57,6 +84,22 @@ export const verificationTokens = pgTable(
   },
   (vt) => [primaryKey({ columns: [vt.identifier, vt.token] })]
 );
+
+// --- Invitations ---
+
+export const invitations = pgTable("invitations", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  orgId: uuid("org_id")
+    .notNull()
+    .references(() => organizations.id, { onDelete: "cascade" }),
+  email: text("email").notNull(),
+  token: text("token").notNull().unique(),
+  status: invitationStatusEnum("status").default("pending").notNull(),
+  sentAt: timestamp("sent_at", { mode: "date" }),
+  acceptedAt: timestamp("accepted_at", { mode: "date" }),
+  expiresAt: timestamp("expires_at", { mode: "date" }).notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+});
 
 // --- App tables ---
 
