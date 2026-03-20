@@ -226,7 +226,7 @@ export default function HomePage() {
 
           {/* Small accent quote */}
           <div className="bg-accent text-accent-foreground p-8 flex flex-col justify-between min-h-[340px]">
-            <p className="text-lg font-medium leading-relaxed">
+            <p className="font-[family-name:var(--font-display)] text-xl md:text-2xl tracking-[-0.02em] uppercase leading-[1.15]">
               &ldquo;Scenariot med röstkloning var en ögonöppnare. Nu har hela familjen en kodfras.&rdquo;
             </p>
             <div className="mt-8">
@@ -237,7 +237,7 @@ export default function HomePage() {
 
           {/* White card */}
           <div className="bg-card text-foreground border border-border p-8 flex flex-col justify-between min-h-[280px]">
-            <p className="text-lg font-medium leading-relaxed">
+            <p className="font-[family-name:var(--font-display)] text-xl md:text-2xl tracking-[-0.02em] uppercase leading-[1.15]">
               &ldquo;Äntligen en kurs som inte förutsätter att man kan programmera. Praktisk, kort och direkt användbar.&rdquo;
             </p>
             <div className="mt-8">
@@ -248,8 +248,8 @@ export default function HomePage() {
 
           {/* Dark card */}
           <div className="md:col-span-2 bg-foreground text-background p-8 md:p-10 flex flex-col justify-between min-h-[280px]">
-            <p className="text-lg md:text-xl font-medium leading-relaxed">
-              &ldquo;Mina föräldrar gick kursen om bedrägerier och ringde mig samma kväll. De hade redan satt upp tvåfaktorsautentisering. Jag blev helt chockad.&rdquo;
+            <p className="font-[family-name:var(--font-display)] text-2xl md:text-3xl tracking-[-0.02em] uppercase leading-[1.15]">
+              &ldquo;Mina föräldrar gick kursen om bedrägerier och ringde mig samma kväll. De hade redan satt upp tvåfaktorsautentisering.&rdquo;
             </p>
             <div className="mt-8">
               <p className="font-semibold">Erik</p>
