@@ -273,7 +273,7 @@ function SceneWordPrediction() {
           y: [68, 68, 68, 68, 103, 103, 103, 103, 138],
           opacity: [1, 1, 1, 1, 1, 1, 1, 1, 1],
         }}
-        transition={{ duration: words.length * 0.35 + 0.5, repeat: Infinity, repeatDelay: 0.5, ease: "steps(9)" }}
+        transition={{ duration: words.length * 0.35 + 0.5, repeat: Infinity, repeatDelay: 0.5, ease: "linear" }}
       />
 
       {/* Probability bars at bottom */}
