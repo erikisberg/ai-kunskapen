@@ -43,13 +43,56 @@ export default async function OrgDetailPage({ params }: Props) {
     .innerJoin(schema.users, eq(schema.progress.userId, schema.users.id))
     .where(eq(schema.users.orgId, org.id));
 
-  // Recent invitations
+  // All invitations with user + progress data
   const invitations = await db
-    .select()
+    .select({
+      id: schema.invitations.id,
+      email: schema.invitations.email,
+      status: schema.invitations.status,
+      sentAt: schema.invitations.sentAt,
+      acceptedAt: schema.invitations.acceptedAt,
+      createdAt: schema.invitations.createdAt,
+    })
     .from(schema.invitations)
     .where(eq(schema.invitations.orgId, org.id))
-    .orderBy(schema.invitations.createdAt)
-    .limit(50);
+    .orderBy(schema.invitations.createdAt);
+
+  // For each invitation, check if user exists and their progress
+  const peopleData = await Promise.all(
+    invitations.map(async (inv) => {
+      const [user] = await db
+        .select({ id: schema.users.id, name: schema.users.name, onboarded: schema.users.onboarded })
+        .from(schema.users)
+        .where(eq(schema.users.email, inv.email))
+        .limit(1);
+
+      let progressCount = 0;
+      if (user) {
+        const [pc] = await db
+          .select({ count: count() })
+          .from(schema.progress)
+          .where(eq(schema.progress.userId, user.id));
+        progressCount = pc?.count || 0;
+      }
+
+      // Determine status: inbjuden → påbörjat → slutfört
+      let personStatus: "invited" | "started" | "completed" = "invited";
+      if (user && progressCount > 0) {
+        personStatus = progressCount >= 10 ? "completed" : "started"; // rough threshold
+      } else if (inv.status === "accepted") {
+        personStatus = "started";
+      }
+
+      return {
+        ...inv,
+        userName: user?.name,
+        hasUser: !!user,
+        onboarded: user?.onboarded || false,
+        modulesCompleted: progressCount,
+        personStatus,
+      };
+    })
+  );
 
   const stats = {
     invitations: inviteCount?.count || 0,
@@ -122,41 +165,81 @@ export default async function OrgDetailPage({ params }: Props) {
           <OrgInviteForm orgId={org.id} />
         </div>
 
-        {/* Invitation list */}
+        {/* People list */}
         <div>
           <h2 className="font-[family-name:var(--font-display)] text-xl uppercase mb-4">
-            Inbjudningar ({invitations.length})
+            Anställda ({peopleData.length})
           </h2>
 
-          {invitations.length === 0 ? (
+          {peopleData.length === 0 ? (
             <p className="text-sm text-muted-foreground">Inga inbjudningar ännu.</p>
           ) : (
             <div className="border border-border rounded-xl overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border bg-secondary/30">
-                    <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Mejl</th>
-                    <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Status</th>
-                    <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Datum</th>
+                    <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Person</th>
+                    <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Inbjudan</th>
+                    <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Framsteg</th>
+                    <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Moduler</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {invitations.map((inv) => (
-                    <tr key={inv.id} className="border-b border-border last:border-0">
-                      <td className="px-4 py-2.5 font-mono text-xs">{inv.email}</td>
-                      <td className="px-4 py-2.5">
+                  {peopleData.map((person) => (
+                    <tr key={person.id} className="border-b border-border last:border-0">
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold ${
+                            person.personStatus === "completed"
+                              ? "bg-green-500/10 text-green-600"
+                              : person.personStatus === "started"
+                                ? "bg-primary/10 text-primary"
+                                : "bg-secondary text-muted-foreground"
+                          }`}>
+                            {person.userName?.[0]?.toUpperCase() || person.email[0].toUpperCase()}
+                          </div>
+                          <div>
+                            {person.userName && (
+                              <p className="font-medium text-sm">{person.userName}</p>
+                            )}
+                            <p className="font-mono text-xs text-muted-foreground">{person.email}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
                         <span className={`text-xs px-2 py-0.5 rounded-full ${
-                          inv.status === "accepted"
+                          person.status === "accepted"
                             ? "bg-green-500/10 text-green-600"
-                            : inv.status === "expired"
+                            : person.status === "expired"
                               ? "bg-red-500/10 text-red-500"
                               : "bg-amber-500/10 text-amber-600"
                         }`}>
-                          {inv.status === "accepted" ? "Accepterad" : inv.status === "expired" ? "Utgången" : "Väntande"}
+                          {person.status === "accepted" ? "Accepterad" : person.status === "expired" ? "Utgången" : "Skickad"}
                         </span>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">
+                          {person.createdAt.toLocaleDateString("sv-SE")}
+                        </p>
                       </td>
-                      <td className="px-4 py-2.5 text-muted-foreground text-xs">
-                        {inv.createdAt.toLocaleDateString("sv-SE")}
+                      <td className="px-4 py-3">
+                        {person.personStatus === "completed" ? (
+                          <span className="inline-flex items-center gap-1 text-xs text-green-600">
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            Slutfört
+                          </span>
+                        ) : person.personStatus === "started" ? (
+                          <span className="inline-flex items-center gap-1 text-xs text-primary">
+                            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                            Påbörjat
+                          </span>
+                        ) : (
+                          <span className="text-xs text-muted-foreground">
+                            Ej påbörjat
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="text-sm font-mono tabular-nums">{person.modulesCompleted}</span>
+                        <span className="text-xs text-muted-foreground ml-0.5">/ 20</span>
                       </td>
                     </tr>
                   ))}
