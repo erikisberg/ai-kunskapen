@@ -280,12 +280,14 @@ export function ChatStep({
               <button
                 onClick={handleContinue}
                 className={cn(
-                  "inline-flex items-center gap-2 font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase transition-opacity hover:opacity-80",
-                  type === "learn" ? "text-primary" : "text-foreground"
+                  "inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-medium transition-all hover:scale-[1.03] active:scale-[0.98]",
+                  type === "learn"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-accent text-accent-foreground"
                 )}
               >
-                [ FORTSÄTT ]
-                <ArrowRight className="w-5 h-5" />
+                Fortsätt
+                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>
