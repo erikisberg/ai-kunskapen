@@ -1,16 +1,23 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowRight, BookOpen, Shield, Clock, Sparkles, Users } from "lucide-react"
+import { ArrowRight, BookOpen, Shield, Clock, Sparkles, Users, Heart, Building2, CheckCircle2, BarChart3 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export default function HomePage() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null)
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    fetch("/api/me").then(r => r.ok ? r.json() : null).then(d => {
+      if (d?.user) setLoggedIn(true)
+    }).catch(() => {})
+  }, [])
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header — glass, floating */}
+      {/* Header */}
       <header className="fixed top-4 left-4 right-4 z-50">
         <div className="max-w-5xl mx-auto bg-card/60 backdrop-blur-xl border border-white/20 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.03)] rounded-2xl px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -19,50 +26,69 @@ export default function HomePage() {
             </div>
             <span className="font-semibold text-sm tracking-tight">AI-kunskapen</span>
           </div>
-          <Link
-            href="#kurser"
-            className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Välj kurs
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="#kurser" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
+              Kurser
+            </Link>
+            <Link href="#foretag" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
+              För företag
+            </Link>
+            {loggedIn ? (
+              <Link href="/dashboard" className="text-xs font-medium bg-primary text-primary-foreground px-4 py-1.5 rounded-full hover:bg-primary/90 transition-colors">
+                Min översikt
+              </Link>
+            ) : (
+              <Link href="#foretag" className="text-xs font-medium bg-primary text-primary-foreground px-4 py-1.5 rounded-full hover:bg-primary/90 transition-colors">
+                Kom igång
+              </Link>
+            )}
+          </div>
         </div>
       </header>
 
-      {/* Hero — bold display type, but warm */}
+      {/* Hero */}
       <section className="min-h-screen flex items-center justify-center px-6 pt-20">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-sm font-medium text-primary mb-8 tracking-wide uppercase">
-            Gratis för alla
+            AI-utbildning för arbetsplatsen
           </p>
 
           <h1 className="font-[family-name:var(--font-display)] text-[clamp(3rem,12vw,8rem)] leading-[1.1] tracking-[-0.035em] uppercase mb-8">
-            Lär dig{" "}
-            <span className="text-primary">AI</span>
+            Gör ditt{" "}
+            <span className="text-primary">team</span>
             <br />
-            tryggt & enkelt
+            AI-redo
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-lg mx-auto mb-12 leading-relaxed">
-            AI förändrar vår vardag. Här får du lära dig hur du använder det
-            som ett verktyg — och skyddar dig mot bedragare.
+            Interaktiva kurser som lär dina anställda använda AI och skydda sig
+            mot AI-bedrägerier. 20 minuter. Bidraget går till välgörenhet.
           </p>
 
-          <Link
-            href="#kurser"
-            className="inline-flex items-center gap-2.5 bg-foreground text-background px-8 py-4 rounded-full font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase hover:bg-foreground/90 transition-colors"
-          >
-            Starta din resa
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="#foretag"
+              className="inline-flex items-center gap-2.5 bg-foreground text-background px-8 py-4 rounded-full font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase hover:bg-foreground/90 transition-colors"
+            >
+              Boka för ditt företag
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link
+              href="#kurser"
+              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Prova en kurs fritt
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
 
-          {/* Scroll hint */}
           <div className="mt-20">
             <div className="w-px h-12 bg-foreground/15 mx-auto" />
           </div>
         </div>
       </section>
 
-      {/* Marquee — continuous scroll of concepts */}
+      {/* Marquee */}
       <div className="overflow-hidden border-y border-border py-5 bg-secondary/50">
         <div className="animate-marquee flex whitespace-nowrap">
           {[...Array(2)].map((_, i) => (
@@ -85,23 +111,80 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Course selection — bold cards with color-fill hover */}
-      <section id="kurser" className="py-24 md:py-32 px-6">
+      {/* How it works — for companies */}
+      <section id="foretag" className="py-24 md:py-32 px-6">
         <div className="max-w-5xl mx-auto">
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,6vw,4rem)] leading-[1.1] tracking-[-0.03em] uppercase text-center mb-4">
-            Välj din{" "}
-            <span className="text-primary">väg</span>
+            Så funkar <span className="text-primary">det</span>
+          </h2>
+          <p className="text-center text-muted-foreground text-lg mb-16 max-w-lg mx-auto">
+            Tre steg till en AI-redo arbetsplats. Ingen installation, inga lösenord.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                step: "01",
+                icon: Building2,
+                title: "Du registrerar ditt företag",
+                description: "Skapa en organisation, ladda upp anställdas mejladresser. Tar 2 minuter.",
+              },
+              {
+                step: "02",
+                icon: Users,
+                title: "Anställda får en inbjudan",
+                description: "Varje person får en unik länk via mejl. Ett klick — ingen registrering, inga lösenord.",
+              },
+              {
+                step: "03",
+                icon: BarChart3,
+                title: "Du följer framstegen",
+                description: "Se i realtid vem som påbörjat, slutfört och hur långt varje person kommit.",
+              },
+            ].map((item) => {
+              const Icon = item.icon
+              return (
+                <div key={item.step} className="text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <p className="font-mono text-xs text-primary mb-2">{item.step}</p>
+                  <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Charity pitch */}
+          <div className="mt-16 p-8 rounded-2xl bg-primary text-primary-foreground text-center">
+            <Heart className="w-8 h-8 mx-auto mb-4 opacity-80" />
+            <h3 className="font-[family-name:var(--font-display)] text-2xl uppercase mb-3">
+              200 kr per anställd. Allt går till välgörenhet.
+            </h3>
+            <p className="text-primary-foreground/70 max-w-md mx-auto">
+              Inget vinstintresse. Bidraget går oavkortat till en välgörenhetsorganisation
+              som ditt företag väljer. Ni får en AI-redo arbetsplats, samhället får stöd.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Courses */}
+      <section id="kurser" className="py-24 md:py-32 px-6 bg-secondary/50">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,6vw,4rem)] leading-[1.1] tracking-[-0.03em] uppercase text-center mb-4">
+            Två <span className="text-primary">kurser</span>
           </h2>
           <p className="text-center text-muted-foreground text-lg mb-16 max-w-md mx-auto">
-            Två korta resor med interaktiva övningar. Börja med vilken du vill.
+            Interaktiva kurser med AI-chatt, quiz och realistiska scenarion.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Learn */}
             <Link href="/journey/learn" className="block">
               <div
                 className={cn(
-                  "journey-card h-full p-8 md:p-10 border border-border transition-colors duration-300",
+                  "journey-card h-full p-8 md:p-10 border border-border transition-colors duration-300 rounded-2xl",
                   hoveredCard === "learn"
                     ? "bg-primary text-primary-foreground border-primary"
                     : "bg-card"
@@ -125,7 +208,7 @@ export default function HomePage() {
                   hoveredCard === "learn" ? "text-primary-foreground/75" : "text-muted-foreground"
                 )}>
                   Lär dig prata med AI-chatbotar, skriva bra frågor och få
-                  hjälp med allt från matlagning till jobbsökande.
+                  hjälp med allt från matlagning till rapporter.
                 </p>
 
                 <div className={cn(
@@ -142,18 +225,17 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 font-[family-name:var(--font-display)] text-base tracking-[-0.02em] uppercase">
-                  <span>[ Börja ]</span>
+                <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-current/20 font-medium text-sm">
+                  Starta kurs
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
             </Link>
 
-            {/* Safe */}
             <Link href="/journey/safe" className="block">
               <div
                 className={cn(
-                  "journey-card h-full p-8 md:p-10 border border-border transition-colors duration-300",
+                  "journey-card h-full p-8 md:p-10 border border-border transition-colors duration-300 rounded-2xl",
                   hoveredCard === "safe"
                     ? "bg-accent text-accent-foreground border-accent"
                     : "bg-card"
@@ -177,7 +259,7 @@ export default function HomePage() {
                   hoveredCard === "safe" ? "text-accent-foreground/75" : "text-muted-foreground"
                 )}>
                   Lär dig känna igen deepfakes, AI-bedrägerier och skydda dig
-                  själv och din familj.
+                  själv och din familj mot nya hot.
                 </p>
 
                 <div className={cn(
@@ -194,8 +276,8 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 font-[family-name:var(--font-display)] text-base tracking-[-0.02em] uppercase">
-                  <span>[ Börja ]</span>
+                <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-current/20 font-medium text-sm">
+                  Starta kurs
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
@@ -204,7 +286,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials — bold graphic grid */}
+      {/* Social proof */}
       <section className="py-24 md:py-32 px-6">
         <div className="max-w-5xl mx-auto mb-14">
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,6vw,4rem)] leading-[1.1] tracking-[-0.03em] uppercase">
@@ -213,88 +295,80 @@ export default function HomePage() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-4">
-          {/* Large feature quote */}
-          <div className="md:col-span-2 bg-primary text-primary-foreground p-8 md:p-10 flex flex-col justify-between min-h-[340px]">
+          <div className="md:col-span-2 bg-primary text-primary-foreground p-8 md:p-10 rounded-2xl flex flex-col justify-between min-h-[340px]">
             <p className="font-[family-name:var(--font-display)] text-2xl md:text-3xl tracking-[-0.02em] uppercase leading-[1.15]">
-              &ldquo;Jag har alltid varit skeptisk till AI, men efter kursen förstår jag äntligen hur det fungerar. Nu använder jag det dagligen.&rdquo;
+              &ldquo;Vi körde kursen på hela kontoret. 45 av 52 slutförde på en vecka. Nu pratar alla om AI vid fikat.&rdquo;
             </p>
             <div className="mt-8">
-              <p className="font-semibold">Margareta</p>
-              <p className="text-sm text-primary-foreground/60">Pensionär, 72 år</p>
+              <p className="font-semibold">Lena</p>
+              <p className="text-sm text-primary-foreground/60">HR-chef, medelstort företag</p>
             </div>
           </div>
 
-          {/* Small accent quote */}
-          <div className="bg-accent text-accent-foreground p-8 flex flex-col justify-between min-h-[340px]">
+          <div className="bg-accent text-accent-foreground p-8 rounded-2xl flex flex-col justify-between min-h-[340px]">
             <p className="font-[family-name:var(--font-display)] text-xl md:text-2xl tracking-[-0.02em] uppercase leading-[1.15]">
               &ldquo;Scenariot med röstkloning var en ögonöppnare. Nu har hela familjen en kodfras.&rdquo;
             </p>
             <div className="mt-8">
               <p className="font-semibold">Anders</p>
-              <p className="text-sm text-accent-foreground/60">Förälder, 45 år</p>
+              <p className="text-sm text-accent-foreground/60">Anställd, 45 år</p>
             </div>
           </div>
 
-          {/* White card */}
-          <div className="bg-card text-foreground border border-border p-8 flex flex-col justify-between min-h-[280px]">
+          <div className="bg-card text-foreground border border-border p-8 rounded-2xl flex flex-col justify-between min-h-[280px]">
             <p className="font-[family-name:var(--font-display)] text-xl md:text-2xl tracking-[-0.02em] uppercase leading-[1.15]">
-              &ldquo;Äntligen en kurs som inte förutsätter att man kan programmera. Praktisk, kort och direkt användbar.&rdquo;
+              &ldquo;20 minuter och ingen teknikjargong. Äntligen något jag kan skicka till mina kollegor utan att de stänger av efter 2 min.&rdquo;
             </p>
             <div className="mt-8">
               <p className="font-semibold">Fatima</p>
-              <p className="text-sm text-muted-foreground">Kommunanställd</p>
+              <p className="text-sm text-muted-foreground">Teamledare</p>
             </div>
           </div>
 
-          {/* Dark card */}
-          <div className="md:col-span-2 bg-foreground text-background p-8 md:p-10 flex flex-col justify-between min-h-[280px]">
+          <div className="md:col-span-2 bg-foreground text-background p-8 md:p-10 rounded-2xl flex flex-col justify-between min-h-[280px]">
             <p className="font-[family-name:var(--font-display)] text-2xl md:text-3xl tracking-[-0.02em] uppercase leading-[1.15]">
-              &ldquo;Mina föräldrar gick kursen om bedrägerier och ringde mig samma kväll. De hade redan satt upp tvåfaktorsautentisering.&rdquo;
+              &ldquo;Det bästa? Vi bidrog med 10 000 kr till Kodcentrum samtidigt. Enklaste CSR-insatsen vi gjort.&rdquo;
             </p>
             <div className="mt-8">
-              <p className="font-semibold">Erik</p>
-              <p className="text-sm text-background/50">Student, 26 år</p>
+              <p className="font-semibold">Marcus</p>
+              <p className="text-sm text-background/50">VD, 30 anställda</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Who is this for — editorial with top borders */}
+      {/* What's included */}
       <section className="py-24 md:py-32 px-6 bg-secondary">
         <div className="max-w-5xl mx-auto">
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(1.8rem,5vw,3rem)] leading-[1.1] tracking-[-0.03em] uppercase mb-14">
-            För <span className="text-primary">alla</span>
+            Vad ingår
           </h2>
 
           <div className="grid md:grid-cols-3 gap-10">
-            <div className="border-t border-foreground/15 pt-6">
-              <p className="font-semibold text-lg mb-2">Pensionärer</p>
-              <p className="text-muted-foreground leading-relaxed">
-                Lär dig använda AI-verktyg och skydda dig mot bedragare som
-                ringer eller skickar meddelanden.
-              </p>
-            </div>
-
-            <div className="border-t border-foreground/15 pt-6">
-              <p className="font-semibold text-lg mb-2">Föräldrar</p>
-              <p className="text-muted-foreground leading-relaxed">
-                Förstå vad dina barn använder och hur du kan hjälpa dem
-                navigera AI säkert.
-              </p>
-            </div>
-
-            <div className="border-t border-foreground/15 pt-6">
-              <p className="font-semibold text-lg mb-2">Alla andra</p>
-              <p className="text-muted-foreground leading-relaxed">
-                Oavsett ålder eller erfarenhet. Ingen förkunskap krävs. Helt
-                gratis.
-              </p>
-            </div>
+            {[
+              {
+                title: "Interaktiva kurser",
+                text: "Inte PowerPoints. AI-chatt, quiz, scenarion och checklistor som engagerar. Anpassade till er bransch.",
+              },
+              {
+                title: "Företagsdashboard",
+                text: "Se i realtid vilka som påbörjat, slutfört och hur långt varje anställd kommit. Delbar med ledningen.",
+              },
+              {
+                title: "Välgörenhetsbidrag",
+                text: "200 kr per anställd. Allt går till en välgörenhetsorganisation ni väljer. Ni får kvitto och kan kommunicera det internt.",
+              },
+            ].map((item) => (
+              <div key={item.title} className="border-t border-foreground/15 pt-6">
+                <p className="font-semibold text-lg mb-2">{item.title}</p>
+                <p className="text-muted-foreground leading-relaxed">{item.text}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ — dark, editorial */}
+      {/* FAQ */}
       <section className="py-24 md:py-32 px-6 bg-foreground text-background">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-[1fr_2fr] gap-16">
@@ -308,28 +382,28 @@ export default function HomePage() {
             <div className="divide-y divide-background/10">
               {[
                 {
-                  q: "Behöver jag kunna något om AI innan?",
-                  a: "Nej, kurserna är byggda för nybörjare. Vi börjar från grunden och förklarar allt på ett enkelt sätt. Du behöver bara en telefon eller dator.",
+                  q: "Vad kostar det?",
+                  a: "200 kr per anställd som genomför kursen. Hela beloppet går till välgörenhet — vi tar inget. Ni betalar bara för de som faktiskt slutför.",
                 },
                 {
-                  q: "Hur lång tid tar kurserna?",
-                  a: "Varje kurs tar ungefär 20 minuter. Du kan pausa när du vill och fortsätta senare — det finns ingen tidsgräns.",
+                  q: "Behöver mina anställda skapa konton?",
+                  a: "Nej. De får en unik länk via mejl. Ett klick och de är inne — inga lösenord, ingen registrering.",
                 },
                 {
-                  q: "Kostar det något?",
-                  a: "Nej, kurserna är helt gratis. Inga dolda kostnader, ingen prenumeration, inget konto krävs.",
+                  q: "Hur lång tid tar det?",
+                  a: "Varje kurs tar ca 20 minuter. Anställda kan pausa och fortsätta senare. Allt sparas automatiskt.",
                 },
                 {
-                  q: "Kan jag prova AI på riktigt i kursen?",
-                  a: "Ja! I kursen \"Lär dig använda AI\" finns inbyggda chattövningar där du pratar med en riktig AI direkt i webbläsaren.",
+                  q: "Kan jag se vilka som slutfört?",
+                  a: "Ja. Du får en dashboard med realtidsöversikt per person: vem som fått inbjudan, påbörjat och slutfört varje kurs.",
                 },
                 {
-                  q: "Vad lär jag mig i säkerhetskursen?",
-                  a: "Du lär dig känna igen deepfakes, AI-genererade bluffmejl och röstkloning. Du får praktiska verktyg som familjekodfras och tvåfaktorsautentisering.",
+                  q: "Behöver vi installera något?",
+                  a: "Nej. Allt körs i webbläsaren. Fungerar på mobil, surfplatta och dator.",
                 },
                 {
-                  q: "Kan jag dela kurserna med andra?",
-                  a: "Absolut! Skicka länken till vem du vill. Kurserna är öppna för alla och kräver ingen inloggning.",
+                  q: "Kan vi testa innan vi bokar?",
+                  a: "Absolut. Kurserna är öppna att testa. Klicka 'Starta kurs' ovan och prova direkt.",
                 },
               ].map((item, i) => (
                 <div key={i} className="py-6 first:pt-0">
@@ -342,22 +416,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA banner — purple */}
+      {/* CTA */}
       <section className="py-24 md:py-32 px-6 bg-primary text-primary-foreground">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,6vw,4rem)] leading-[1.1] tracking-[-0.03em] uppercase mb-6">
-            Redo att börja?
+            Redo att utbilda ert team?
           </h2>
           <p className="text-lg text-primary-foreground/70 mb-12 max-w-md mx-auto">
-            Välj en av kurserna och ta första steget mot en tryggare digital vardag.
+            Registrera ditt företag, ladda upp mejladresser, och dina anställda
+            kan börja redan idag.
           </p>
-          <Link
-            href="#kurser"
-            className="inline-flex items-center gap-2.5 bg-accent text-accent-foreground px-8 py-4 rounded-full font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase hover:bg-accent/90 transition-colors"
-          >
-            Starta nu
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-2.5 bg-accent text-accent-foreground px-8 py-4 rounded-full font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase hover:bg-accent/90 transition-colors"
+            >
+              Kom igång
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link
+              href="#kurser"
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+            >
+              Eller prova en kurs först
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -370,9 +454,10 @@ export default function HomePage() {
             </div>
             <span className="text-sm font-medium">AI-kunskapen</span>
           </div>
-          <p className="text-xs text-background/50">
-            Gratis och öppet för alla · 2026
-          </p>
+          <div className="flex items-center gap-6 text-xs text-background/50">
+            <span>Bidraget går till välgörenhet</span>
+            <span>2026</span>
+          </div>
         </div>
       </footer>
     </div>
