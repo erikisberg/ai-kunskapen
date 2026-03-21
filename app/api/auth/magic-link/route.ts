@@ -3,6 +3,7 @@ import { randomBytes } from "crypto";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import * as schema from "@/lib/schema";
+import { sendMagicLinkEmail } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   const { email } = await req.json();
@@ -42,7 +43,12 @@ export async function POST(req: NextRequest) {
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3001");
   const loginUrl = `${baseUrl}/api/auth/verify?token=${token}&email=${encodeURIComponent(normalizedEmail)}`;
 
-  console.log(`\n🔑 Magic link for ${normalizedEmail}:\n${loginUrl}\n`);
+  // Send email
+  try {
+    await sendMagicLinkEmail(normalizedEmail, loginUrl);
+  } catch (err) {
+    console.error("Magic link email failed:", err);
+  }
 
   return NextResponse.json({ ok: true, message: "Om kontot finns skickas en inloggningslänk." });
 }

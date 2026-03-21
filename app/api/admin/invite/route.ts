@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { randomBytes } from "crypto";
+import { eq } from "drizzle-orm";
 import { requireAdmin } from "@/lib/admin";
 import { db } from "@/lib/db";
 import * as schema from "@/lib/schema";
+import { sendInvitationEmail } from "@/lib/email";
 
 function generateToken(): string {
   return randomBytes(32).toString("base64url");
@@ -100,10 +102,24 @@ export async function POST(req: NextRequest) {
         expiresAt,
       });
 
-      // TODO: Send email via Resend (Task 5)
-      // For now, log the invite link
       const inviteUrl = `${baseUrl}/join/${token}`;
-      console.log(`Invite: ${normalizedEmail} → ${inviteUrl}`);
+
+      // Send invitation email
+      try {
+        const [org] = await db
+          .select({ name: schema.organizations.name })
+          .from(schema.organizations)
+          .where(eq(schema.organizations.id, resolvedOrgId))
+          .limit(1);
+        await sendInvitationEmail(normalizedEmail, org?.name || "Ditt företag", inviteUrl);
+        await db
+          .update(schema.invitations)
+          .set({ sentAt: new Date() })
+          .where(eq(schema.invitations.token, token));
+      } catch (emailErr) {
+        console.error(`Email failed for ${normalizedEmail}:`, emailErr);
+        // Invitation still created — email can be resent
+      }
 
       sent++;
     } catch (err) {
