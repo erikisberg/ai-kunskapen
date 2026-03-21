@@ -43,7 +43,7 @@ export function ContentStep({ type, title, content, textContent, illustration }:
               />
             )}
 
-            <div className="prose prose-lg max-w-none text-foreground/80 prose-headings:font-semibold prose-headings:text-foreground prose-p:leading-relaxed">
+            <div className="prose prose-lg max-w-none text-foreground/80 prose-headings:font-semibold prose-headings:text-foreground [&_p]:leading-[1.8] [&_li]:leading-[1.7] [&_p]:mb-4">
               {content}
             </div>
           </div>

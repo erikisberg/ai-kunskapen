@@ -105,74 +105,53 @@ export function CompleteStep({ type }: CompleteStepProps) {
           }
         </p>
 
-        {/* Stats */}
-        <div className="border border-border p-8 mb-10">
-          <div className="grid grid-cols-2 gap-8">
-            <div>
-              <p className="font-[family-name:var(--font-display)] text-5xl tracking-[-0.045em]">
-                {progress.steps.length}
-              </p>
-              <p className="text-sm text-muted-foreground mt-2 uppercase tracking-wide">steg genomförda</p>
-            </div>
-            <div>
-              <p className="font-[family-name:var(--font-display)] text-5xl tracking-[-0.045em]">
-                {progress.startedAt && progress.completedAt 
-                  ? Math.round((progress.completedAt.getTime() - progress.startedAt.getTime()) / 60000)
-                  : "~20"
-                }
-              </p>
-              <p className="text-sm text-muted-foreground mt-2 uppercase tracking-wide">minuter</p>
-            </div>
-          </div>
-        </div>
-
         {/* Actions */}
-        <div className="flex flex-col gap-4 mb-10">
-          <button
-            onClick={handleShare}
-            className="inline-flex items-center justify-center gap-2 w-full py-4 border border-border hover:bg-secondary transition-colors font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase"
-          >
-            {shared ? (
-              <>
-                <Check className="w-5 h-5" />
-                KOPIERAT
-              </>
-            ) : (
-              <>
-                <Share2 className="w-5 h-5" />
-                Dela med en vän
-              </>
-            )}
-          </button>
-
-          <Link 
+        <div className="flex flex-col gap-3 mb-10 max-w-sm mx-auto">
+          <Link
             href={`/journey/${otherJourney}`}
             className={cn(
-              "inline-flex items-center justify-center gap-3 w-full py-4 border border-border font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase transition-opacity hover:opacity-80",
+              "inline-flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-full font-medium transition-all hover:scale-[1.03] active:scale-[0.98]",
               otherJourney === "learn" ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
             )}
           >
             {otherJourney === "learn" ? (
               <>
-                <BookOpen className="w-5 h-5" />
-                Fortsätt med &quot;Använd AI&quot;
+                <BookOpen className="w-4 h-4" />
+                Fortsätt med "Använd AI"
               </>
             ) : (
               <>
-                <Shield className="w-5 h-5" />
-                Fortsätt med &quot;Skydda dig&quot;
+                <Shield className="w-4 h-4" />
+                Fortsätt med "Förstå risken"
               </>
             )}
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4" />
           </Link>
+
+          <button
+            onClick={handleShare}
+            className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 rounded-full font-medium border border-border hover:bg-secondary transition-colors"
+          >
+            {shared ? (
+              <>
+                <Check className="w-4 h-4" />
+                Kopierat!
+              </>
+            ) : (
+              <>
+                <Share2 className="w-4 h-4" />
+                Dela med en vän
+              </>
+            )}
+          </button>
         </div>
 
-        <Link 
-          href="/"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+        <Link
+          href="/dashboard"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
-          <Home className="w-5 h-5" />
-          Tillbaka till startsidan
+          <Home className="w-4 h-4" />
+          Till din översikt
         </Link>
       </div>
     </div>

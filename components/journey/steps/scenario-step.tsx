@@ -169,12 +169,12 @@ export function ScenarioStep({
         <div className="sticky bottom-0 bg-background border-t border-border py-4">
           <div className="px-4 md:px-8">
             <div className="max-w-2xl mx-auto flex justify-end">
-              <button 
+              <button
                 onClick={handleContinue}
-                className="inline-flex items-center gap-2 font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase transition-opacity hover:opacity-80"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-medium bg-accent text-accent-foreground transition-all hover:scale-[1.03] active:scale-[0.98]"
               >
                 Fortsätt
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>
