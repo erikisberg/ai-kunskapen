@@ -126,9 +126,14 @@ export default function HomePage() {
                 Min oversikt
               </Link>
             ) : (
-              <Link href="/kontakt" className="text-xs font-medium bg-primary text-primary-foreground px-4 py-1.5 rounded-full hover:bg-primary/90 transition-colors">
-                Kom igang
-              </Link>
+              <>
+                <Link href="/login" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
+                  Logga in
+                </Link>
+                <Link href="/kontakt" className="text-xs font-medium bg-primary text-primary-foreground px-4 py-1.5 rounded-full hover:bg-primary/90 transition-colors">
+                  Kom igang
+                </Link>
+              </>
             )}
           </div>
         </div>
@@ -202,18 +207,21 @@ export default function HomePage() {
             </Link>
           </motion.div>
 
+          {/* Scroll hint — chevron */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5, duration: 1 }}
-            className="mt-20"
+            className="mt-16"
           >
-            <motion.div
-              className="w-px h-12 bg-foreground/15 mx-auto"
-              animate={{ scaleY: [0, 1] }}
-              transition={{ delay: 1.6, duration: 0.8 }}
-              style={{ originY: 0 }}
-            />
+            <motion.svg
+              width="24" height="24" viewBox="0 0 24 24" fill="none"
+              className="mx-auto text-foreground/20"
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </motion.svg>
           </motion.div>
         </motion.div>
       </section>

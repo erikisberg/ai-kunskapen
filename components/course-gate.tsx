@@ -94,7 +94,8 @@ export function CourseGate({ courseType }: CourseGateProps) {
             </Link>
 
             <p className="text-[11px] text-muted-foreground pt-2">
-              Har du redan en inbjudan? Kolla din mejl efter länken.
+              Redan registrerad?{" "}
+              <Link href="/login" className="text-primary underline">Logga in</Link>
             </p>
           </div>
         </div>
