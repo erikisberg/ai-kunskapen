@@ -4,6 +4,7 @@ import { getCourseBySlug, getModuleWithSlides } from "@/lib/directus";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { CourseEditor } from "./editor";
+import { HelpDialog } from "./help-dialog";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -35,10 +36,11 @@ export default async function CourseEditorPage({ params }: Props) {
           <Link href="/admin/courses" className="w-8 h-8 rounded-lg border border-border flex items-center justify-center hover:bg-secondary transition-colors">
             <ArrowLeft className="w-4 h-4" />
           </Link>
-          <div>
+          <div className="flex-1">
             <h1 className="font-semibold">{course.title}</h1>
             <p className="text-xs text-muted-foreground">{course.slug}</p>
           </div>
+          <HelpDialog />
         </div>
       </header>
 
