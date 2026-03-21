@@ -51,6 +51,7 @@ export type Slide = {
   heading: string;
   body_text: string;
   illustration: string | null;
+  video_url: string | null;
   llm_system_prompt: string | null;
   llm_instruction_text: string | null;
   llm_max_messages: number | null;

@@ -53,6 +53,7 @@ function JourneyContent({ journeyType, steps }: DynamicJourneyProps) {
           type={type}
           title={stepData.heading}
           textContent={stepData.bodyText}
+          videoUrl={stepData.videoUrl}
           content={
             <div className="space-y-4 text-foreground/80">
               {stepData.bodyText.split("\n\n").map((paragraph, i) => (

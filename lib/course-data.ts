@@ -30,6 +30,7 @@ export interface StepData {
   type: "intro" | "content" | "quiz" | "scenario" | "llm_chat" | "checklist" | "flow" | "complete";
   heading: string;
   bodyText: string;
+  videoUrl?: string;
   systemPrompt?: string;
   instructionText?: string;
   maxMessages?: number;
@@ -79,6 +80,7 @@ export async function getCourseData(courseSlug: string): Promise<CourseData> {
         type: slide.type === "info" ? "content" : (slide.type as StepData["type"]),
         heading: slide.heading,
         bodyText: slide.body_text,
+        videoUrl: slide.video_url || undefined,
       };
 
       if (slide.type === "llm_chat") {
