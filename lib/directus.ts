@@ -22,6 +22,7 @@ export type Course = {
   accent_color: string;
   illustration: string | null;
   sort_order: number;
+  status: "draft" | "published";
   modules?: Module[];
 };
 
