@@ -51,8 +51,8 @@ function LoginForm() {
                 Kolla din mejl
               </h1>
               <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
-                Vi har skickat en inloggningslank till <strong className="text-foreground">{email}</strong>.
-                Klicka pa lanken i mejlet for att logga in.
+                Vi har skickat en inloggningslänk till <strong className="text-foreground">{email}</strong>.
+                Klicka på länken i mejlet för att logga in.
               </p>
               <p className="text-xs text-muted-foreground">
                 Ingen mejl? Kolla skrappost eller{" "}
@@ -60,7 +60,7 @@ function LoginForm() {
                   onClick={() => { setSent(false); setSending(false) }}
                   className="text-primary underline"
                 >
-                  forsok igen
+                  försök igen
                 </button>
               </p>
             </div>
@@ -75,16 +75,16 @@ function LoginForm() {
                   Logga in
                 </h1>
                 <p className="text-muted-foreground text-sm">
-                  Ange din mejladress sa skickar vi en inloggningslank.
+                  Ange din mejladress så skickar vi en inloggningslänk.
                 </p>
               </div>
 
               {error && (
                 <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 text-red-600 text-sm mb-6">
                   <AlertCircle className="w-4 h-4 shrink-0" />
-                  {error === "expired" ? "Lanken har gatt ut. Forsok igen." :
+                  {error === "expired" ? "Länken har gått ut. Försök igen." :
                    error === "not-found" ? "Inget konto hittades." :
-                   "Ogiltig lank. Forsok igen."}
+                   "Ogiltig länk. Försök igen."}
                 </div>
               )}
 
@@ -109,7 +109,7 @@ function LoginForm() {
                       : "bg-muted text-muted-foreground cursor-not-allowed"
                   )}
                 >
-                  {sending ? "Skickar..." : "Skicka inloggningslank"}
+                  {sending ? "Skickar..." : "Skicka inloggningslänk"}
                   {!sending && <ArrowRight className="w-4 h-4" />}
                 </button>
               </form>
