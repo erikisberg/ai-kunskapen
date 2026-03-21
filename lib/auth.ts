@@ -3,43 +3,52 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { getDb } from "./db";
 import * as schema from "./schema";
 
-// Lazy-init auth — DATABASE_URL may not be set during build
-function createAuth() {
-  return NextAuth({
-    adapter: DrizzleAdapter(getDb(), {
-      usersTable: schema.users,
-      accountsTable: schema.accounts,
-      sessionsTable: schema.sessions,
-      verificationTokensTable: schema.verificationTokens,
-    }),
-    session: { strategy: "jwt" },
-    pages: {
-      signIn: "/login",
-      error: "/login",
-    },
-    callbacks: {
-      jwt({ token, user }) {
-        if (user) {
-          token.id = user.id;
-        }
-        return token;
+// Cache the auth instance — must be same instance across requests
+let _authInstance: ReturnType<typeof NextAuth> | null = null;
+
+function getAuth() {
+  if (!_authInstance) {
+    _authInstance = NextAuth({
+      adapter: DrizzleAdapter(getDb(), {
+        usersTable: schema.users,
+        accountsTable: schema.accounts,
+        sessionsTable: schema.sessions,
+        verificationTokensTable: schema.verificationTokens,
+      }),
+      session: { strategy: "jwt" },
+      secret: process.env.AUTH_SECRET,
+      pages: {
+        signIn: "/login",
+        error: "/login",
       },
-      session({ session, token }) {
-        if (session.user && token.id) {
-          session.user.id = token.id as string;
-        }
-        return session;
+      callbacks: {
+        jwt({ token, user }) {
+          if (user) {
+            token.id = user.id;
+          }
+          return token;
+        },
+        session({ session, token }) {
+          if (session.user && token.id) {
+            session.user.id = token.id as string;
+          }
+          return session;
+        },
       },
-    },
-    providers: [],
-  });
+      providers: [],
+    });
+  }
+  return _authInstance;
 }
 
-// Export lazy wrappers that only init when called at runtime
 export async function auth() {
   if (!process.env.DATABASE_URL) return null;
-  const { auth: authFn } = createAuth();
-  return authFn();
+  try {
+    const { auth: authFn } = getAuth();
+    return await authFn();
+  } catch {
+    return null;
+  }
 }
 
 export const handlers = {
@@ -47,26 +56,26 @@ export const handlers = {
     if (!process.env.DATABASE_URL) {
       return new Response("Auth not configured", { status: 503 });
     }
-    const { handlers: h } = createAuth();
+    const { handlers: h } = getAuth();
     return (h.GET as Function)(...args);
   },
   POST: async (...args: any[]) => {
     if (!process.env.DATABASE_URL) {
       return new Response("Auth not configured", { status: 503 });
     }
-    const { handlers: h } = createAuth();
+    const { handlers: h } = getAuth();
     return (h.POST as Function)(...args);
   },
 };
 
-export async function signIn(...args: Parameters<typeof import("next-auth")["default"]>) {
+export async function signIn(...args: any[]) {
   if (!process.env.DATABASE_URL) return;
-  const { signIn: fn } = createAuth();
+  const { signIn: fn } = getAuth();
   return (fn as Function)(...args);
 }
 
 export async function signOut() {
   if (!process.env.DATABASE_URL) return;
-  const { signOut: fn } = createAuth();
+  const { signOut: fn } = getAuth();
   return (fn as Function)();
 }
