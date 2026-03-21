@@ -192,8 +192,8 @@ export default async function OrgDetailPage({ params }: Props) {
           {peopleData.length === 0 ? (
             <p className="text-sm text-muted-foreground">Inga inbjudningar ännu.</p>
           ) : (
-            <div className="border border-border rounded-xl overflow-hidden">
-              <table className="w-full text-sm">
+            <div className="border border-border rounded-xl overflow-x-auto">
+              <table className="w-full text-sm min-w-[600px]">
                 <thead>
                   <tr className="border-b border-border bg-secondary/30">
                     <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Person</th>

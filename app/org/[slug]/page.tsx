@@ -159,8 +159,8 @@ export default async function PublicOrgDashboard({ params }: Props) {
             <h2 className="font-[family-name:var(--font-display)] text-xl uppercase mb-4">
               Anställda
             </h2>
-            <div className="border border-border rounded-xl overflow-hidden">
-              <table className="w-full text-sm">
+            <div className="border border-border rounded-xl overflow-x-auto">
+              <table className="w-full text-sm min-w-[500px]">
                 <thead>
                   <tr className="border-b border-border bg-secondary/30">
                     <th className="text-left px-4 py-3 font-medium text-muted-foreground">Person</th>

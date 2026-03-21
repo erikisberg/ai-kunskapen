@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
-import { motion, useInView, useScroll, useTransform } from "motion/react"
+import { motion, useInView } from "motion/react"
 import { ArrowRight, BookOpen, Shield, Clock, Sparkles, Users, Heart, Building2, BarChart3 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -59,9 +59,6 @@ export default function HomePage() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null)
   const [loggedIn, setLoggedIn] = useState(false)
   const heroRef = useRef(null)
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 150])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
 
   useEffect(() => {
     fetch("/api/me").then(r => r.ok ? r.json() : null).then(d => {
@@ -86,12 +83,6 @@ export default function HomePage() {
             <span className="font-semibold text-sm tracking-tight">AI-kunskapen</span>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="#kurser" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
-              Kurser
-            </Link>
-            <Link href="#foretag" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
-              För företag
-            </Link>
             {loggedIn ? (
               <Link href="/dashboard" className="text-xs font-medium bg-primary text-primary-foreground px-4 py-1.5 rounded-full hover:bg-primary/90 transition-colors">
                 Min översikt
@@ -112,7 +103,7 @@ export default function HomePage() {
 
       {/* Hero */}
       <section ref={heroRef} className="min-h-screen flex items-center justify-center px-6 pt-20 relative">
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -157,7 +148,7 @@ export default function HomePage() {
               <ArrowRight className="w-5 h-5" />
             </Link>
           </motion.div>
-        </motion.div>
+        </div>
 
         <motion.div
           initial={{ opacity: 0 }}

@@ -52,7 +52,7 @@ export function ContentStep({ type, title, content, textContent, illustration, v
 
                 {/* Video side — 9:16 stories format */}
                 <div className="w-full md:w-[280px] lg:w-[320px] shrink-0">
-                  <div className="relative rounded-2xl overflow-hidden bg-black shadow-xl aspect-[9/16]">
+                  <div className="relative rounded-2xl overflow-hidden bg-black shadow-xl aspect-[9/16] max-h-[50vh] md:max-h-none">
                     <video
                       src={videoUrl}
                       autoPlay
