@@ -8,40 +8,49 @@ import { useJourney, type JourneyType } from "@/lib/journey-context"
 import { cn } from "@/lib/utils"
 
 // Simple markdown renderer for chat messages
+function renderInline(text: string, keyPrefix: number | string): React.ReactNode[] {
+  const boldRegex = /\*\*(.+?)\*\*/g
+  let lastIndex = 0
+  const elements: React.ReactNode[] = []
+  let match
+
+  while ((match = boldRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      elements.push(text.slice(lastIndex, match.index))
+    }
+    elements.push(<strong key={`${keyPrefix}-b-${match.index}`} className="font-semibold">{match[1]}</strong>)
+    lastIndex = match.index + match[0].length
+  }
+
+  if (lastIndex < text.length) {
+    elements.push(text.slice(lastIndex))
+  }
+
+  return elements.length > 0 ? elements : [text]
+}
+
 function renderMarkdown(text: string) {
   const parts: React.ReactNode[] = []
   const lines = text.split('\n')
 
   lines.forEach((line, lineIndex) => {
-    const boldRegex = /\*\*(.+?)\*\*/g
-    let lastIndex = 0
-    const lineElements: React.ReactNode[] = []
-    let match
+    const lineElements = renderInline(line, lineIndex)
 
-    while ((match = boldRegex.exec(line)) !== null) {
-      if (match.index > lastIndex) {
-        lineElements.push(line.slice(lastIndex, match.index))
-      }
-      lineElements.push(<strong key={`${lineIndex}-${match.index}`} className="font-semibold">{match[1]}</strong>)
-      lastIndex = match.index + match[0].length
-    }
-
-    if (lastIndex < line.length) {
-      lineElements.push(line.slice(lastIndex))
-    }
-
-    if (line.startsWith('- ')) {
+    if (line.startsWith('- ') || line.startsWith('* ')) {
+      const bulletContent = line.slice(2)
+      const bulletElements = renderInline(bulletContent, lineIndex)
       parts.push(
         <li key={lineIndex} className="ml-4 list-disc">
-          {lineElements.length > 0 ? lineElements.slice(1) : line.slice(2)}
+          {bulletElements}
         </li>
       )
     } else if (/^\d+\.\s/.test(line)) {
       const numberMatch = line.match(/^(\d+)\.\s(.*)/)
       if (numberMatch) {
+        const numElements = renderInline(numberMatch[2], lineIndex)
         parts.push(
           <li key={lineIndex} className="ml-4 list-decimal">
-            {lineElements.length > 1 ? lineElements.slice(1) : numberMatch[2]}
+            {numElements}
           </li>
         )
       }
