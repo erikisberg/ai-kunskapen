@@ -19,8 +19,8 @@ export default function KontaktPage() {
             Utbilda ditt <span className="text-primary">team</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-md mx-auto">
-            Kom igång med AI-kunskapen för ditt företag.
-            Hela bidraget går till välgörenhet.
+            Vi sätter upp allt åt er. Ni behöver bara skicka oss en mejllista
+            — resten tar vi hand om.
           </p>
         </div>
 
@@ -29,27 +29,27 @@ export default function KontaktPage() {
           {[
             {
               step: "1",
-              icon: Building2,
-              title: "Registrera ditt företag",
-              description: "Skapa en organisation med företagsnamn och bransch. Vi anpassar kursinnehållet efter er verklighet.",
+              icon: Mail,
+              title: "Kontakta oss",
+              description: "Berätta om ert företag och hur många anställda ni vill utbilda. Vi anpassar kurserna efter er bransch.",
             },
             {
               step: "2",
-              icon: Mail,
-              title: "Ladda upp mejladresser",
-              description: "Klistra in mejladresser — en per rad. Varje anställd får en unik inbjudningslänk. Inga lösenord.",
+              icon: Building2,
+              title: "Vi sätter upp allt",
+              description: "Vi skapar er organisation, konfigurerar kurserna och skickar ut inbjudningar till era anställda.",
             },
             {
               step: "3",
               icon: Users,
-              title: "Följ framstegen",
-              description: "Se i realtid vem som påbörjat och slutfört. Dela dashboarden med ledningen.",
+              title: "Era anställda får en unik länk",
+              description: "Varje person får ett mejl med en personlig länk. Ett klick — inga lösenord, ingen registrering.",
             },
             {
               step: "4",
               icon: Heart,
-              title: "Bidraget skickas",
-              description: "200 kr per anställd som slutför minst en kurs. Hela beloppet går till en välgörenhetsorganisation ni väljer.",
+              title: "Bidraget går till välgörenhet",
+              description: "200 kr per anställd som slutför minst en kurs. Hela beloppet går till en organisation ni väljer tillsammans med oss.",
             },
           ].map((item) => {
             const Icon = item.icon
@@ -76,7 +76,7 @@ export default function KontaktPage() {
             Redo att börja?
           </h2>
           <p className="text-primary-foreground/70 mb-6 max-w-sm mx-auto text-sm">
-            Kontakta oss så hjälper vi dig sätta upp allt. Eller skapa ett konto direkt.
+            Skicka ett mejl så återkommer vi inom 24 timmar med en plan för ert team.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a

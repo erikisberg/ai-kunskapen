@@ -17,21 +17,29 @@ import type { StepData, JourneyType } from "@/lib/course-data"
 interface DynamicJourneyProps {
   journeyType: JourneyType
   steps: StepData[]
+  initialStep?: number
 }
 
-function JourneyContent({ journeyType, steps }: DynamicJourneyProps) {
-  const { progress, setJourneyType } = useJourney()
+function JourneyContent({ journeyType, steps, initialStep = 0 }: DynamicJourneyProps) {
+  const { progress, setJourneyType, goToStep } = useJourney()
 
   useEffect(() => {
     // Convert StepData to journey-context Step format
-    const contextSteps: Step[] = steps.map((s) => ({
+    const contextSteps: Step[] = steps.map((s, i) => ({
       id: s.id,
       title: s.title,
       type: s.type === "llm_chat" ? "chat" : s.type,
-      completed: false,
+      completed: i < initialStep,
     }))
     setJourneyType(journeyType, contextSteps)
-  }, [journeyType, steps, setJourneyType])
+  }, [journeyType, steps, setJourneyType, initialStep])
+
+  // Jump to initial step after context is set
+  useEffect(() => {
+    if (initialStep > 0 && progress.steps.length > 0) {
+      goToStep(initialStep)
+    }
+  }, [initialStep, progress.steps.length, goToStep])
 
   const currentStep = progress.steps[progress.currentStep]
   if (!currentStep) return null
@@ -171,10 +179,10 @@ function groupQuizOptions(
 
 export { JourneyContent }
 
-export function DynamicJourney({ journeyType, steps }: DynamicJourneyProps) {
+export function DynamicJourney({ journeyType, steps, initialStep = 0 }: DynamicJourneyProps) {
   return (
     <JourneyLayout type={journeyType}>
-      <JourneyContent journeyType={journeyType} steps={steps} />
+      <JourneyContent journeyType={journeyType} steps={steps} initialStep={initialStep} />
     </JourneyLayout>
   )
 }
