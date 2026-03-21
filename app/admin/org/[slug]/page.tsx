@@ -57,28 +57,43 @@ export default async function OrgDetailPage({ params }: Props) {
     .where(eq(schema.invitations.orgId, org.id))
     .orderBy(schema.invitations.createdAt);
 
+  // Deduplicate invitations by email
+  const seenEmails = new Set<string>();
+  const uniqueInvitations = invitations.filter((inv) => {
+    if (seenEmails.has(inv.email)) return false;
+    seenEmails.add(inv.email);
+    return true;
+  });
+
   // For each invitation, check if user exists and their progress
   const peopleData = await Promise.all(
-    invitations.map(async (inv) => {
+    uniqueInvitations.map(async (inv) => {
       const [user] = await db
         .select({ id: schema.users.id, name: schema.users.name, onboarded: schema.users.onboarded })
         .from(schema.users)
         .where(eq(schema.users.email, inv.email))
         .limit(1);
 
-      let progressCount = 0;
+      let learnCount = 0;
+      let safeCount = 0;
       if (user) {
-        const [pc] = await db
-          .select({ count: count() })
+        const progress = await db
+          .select({ courseSlug: schema.progress.courseSlug })
           .from(schema.progress)
           .where(eq(schema.progress.userId, user.id));
-        progressCount = pc?.count || 0;
+        learnCount = progress.filter(p => p.courseSlug === "anvanda-ai").length;
+        safeCount = progress.filter(p => p.courseSlug === "forsta-risken").length;
       }
 
-      // Determine status: inbjuden → påbörjat → slutfört
+      const learnDone = learnCount >= 9;
+      const safeDone = safeCount >= 11;
+      const completedAny = learnDone || safeDone;
+
       let personStatus: "invited" | "started" | "completed" = "invited";
-      if (user && progressCount > 0) {
-        personStatus = progressCount >= 10 ? "completed" : "started"; // rough threshold
+      if (completedAny) {
+        personStatus = "completed";
+      } else if (user && (learnCount > 0 || safeCount > 0)) {
+        personStatus = "started";
       } else if (inv.status === "accepted") {
         personStatus = "started";
       }
@@ -88,7 +103,10 @@ export default async function OrgDetailPage({ params }: Props) {
         userName: user?.name,
         hasUser: !!user,
         onboarded: user?.onboarded || false,
-        modulesCompleted: progressCount,
+        learnCount,
+        safeCount,
+        learnDone,
+        safeDone,
         personStatus,
       };
     })
@@ -181,7 +199,8 @@ export default async function OrgDetailPage({ params }: Props) {
                     <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Person</th>
                     <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Inbjudan</th>
                     <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Framsteg</th>
-                    <th className="text-left px-4 py-2.5 font-medium text-muted-foreground">Moduler</th>
+                    <th className="text-center px-4 py-2.5 font-medium text-muted-foreground">Kurs 1</th>
+                    <th className="text-center px-4 py-2.5 font-medium text-muted-foreground">Kurs 2</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -237,9 +256,33 @@ export default async function OrgDetailPage({ params }: Props) {
                           </span>
                         )}
                       </td>
-                      <td className="px-4 py-3">
-                        <span className="text-sm font-mono tabular-nums">{person.modulesCompleted}</span>
-                        <span className="text-xs text-muted-foreground ml-0.5">/ 20</span>
+                      <td className="px-4 py-3 text-center">
+                        {person.learnDone ? (
+                          <CheckCircle2 className="w-4 h-4 text-green-500 mx-auto" />
+                        ) : person.learnCount > 0 ? (
+                          <div className="flex items-center justify-center gap-1.5">
+                            <div className="w-10 h-1.5 rounded-full bg-secondary overflow-hidden">
+                              <div className="h-full rounded-full bg-primary" style={{ width: `${Math.round((person.learnCount / 9) * 100)}%` }} />
+                            </div>
+                            <span className="text-[10px] text-muted-foreground">{Math.round((person.learnCount / 9) * 100)}%</span>
+                          </div>
+                        ) : (
+                          <span className="w-4 h-4 rounded-full border border-foreground/10 block mx-auto" />
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        {person.safeDone ? (
+                          <CheckCircle2 className="w-4 h-4 text-green-500 mx-auto" />
+                        ) : person.safeCount > 0 ? (
+                          <div className="flex items-center justify-center gap-1.5">
+                            <div className="w-10 h-1.5 rounded-full bg-secondary overflow-hidden">
+                              <div className="h-full rounded-full bg-accent" style={{ width: `${Math.round((person.safeCount / 11) * 100)}%` }} />
+                            </div>
+                            <span className="text-[10px] text-muted-foreground">{Math.round((person.safeCount / 11) * 100)}%</span>
+                          </div>
+                        ) : (
+                          <span className="w-4 h-4 rounded-full border border-foreground/10 block mx-auto" />
+                        )}
                       </td>
                     </tr>
                   ))}

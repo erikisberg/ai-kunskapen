@@ -21,6 +21,12 @@ export function AdminHeader() {
             </span>
           </div>
           <div className="flex items-center gap-2">
+            <Link
+              href="/admin/courses"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border text-sm font-medium hover:bg-secondary transition-colors"
+            >
+              Kurser
+            </Link>
             <button
               onClick={() => setShowCreate(true)}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border text-sm font-medium hover:bg-secondary transition-colors"
