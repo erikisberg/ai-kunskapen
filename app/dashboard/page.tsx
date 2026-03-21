@@ -6,6 +6,7 @@ import * as schema from "@/lib/schema";
 import Link from "next/link";
 import { BookOpen, ShieldCheck, CheckCircle2, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { LogoutButton } from "@/components/logout-button";
 
 export default async function DashboardPage() {
   let session;
@@ -83,8 +84,9 @@ export default async function DashboardPage() {
           <Link href="/" className="font-[family-name:var(--font-display)] text-xl uppercase">
             AI-kunskapen
           </Link>
-          <div className="text-sm text-muted-foreground">
-            {user.email}
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-muted-foreground hidden sm:block">{user.email}</span>
+            <LogoutButton />
           </div>
         </div>
       </header>
