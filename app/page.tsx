@@ -82,14 +82,14 @@ export default function HomePage() {
             </div>
             <span className="font-semibold text-sm tracking-tight">AI-kunskapen</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {loggedIn ? (
               <Link href="/dashboard" className="text-xs font-medium bg-primary text-primary-foreground px-4 py-1.5 rounded-full hover:bg-primary/90 transition-colors">
                 Min översikt
               </Link>
             ) : (
               <>
-                <Link href="/login" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
+                <Link href="/login" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
                   Logga in
                 </Link>
                 <Link href="/kontakt" className="text-xs font-medium bg-primary text-primary-foreground px-4 py-1.5 rounded-full hover:bg-primary/90 transition-colors">
