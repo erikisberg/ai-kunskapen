@@ -48,19 +48,33 @@ function getSlideLabel(type: string) {
   return t ? t.label : type
 }
 
-export function CourseEditor({ courseId, courseSlug, modules: initialModules }: {
+export function CourseEditor({ courseId, courseSlug, courseStatus, modules: initialModules }: {
   courseId: string
   courseSlug: string
+  courseStatus: string
   modules: Module[]
 }) {
   const router = useRouter()
   const [modules, setModules] = useState(initialModules)
+  const [status, setStatus] = useState(courseStatus)
   const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set(initialModules.map(m => m.id)))
   const [editingSlide, setEditingSlide] = useState<string | null>(null)
   const [addingModule, setAddingModule] = useState(false)
   const [newModuleTitle, setNewModuleTitle] = useState("")
   const [addingSlideToModule, setAddingSlideToModule] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+
+  const handleToggleStatus = async () => {
+    const newStatus = status === "published" ? "draft" : "published"
+    setSaving(true)
+    await fetch(`/api/admin/courses/${courseId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: newStatus }),
+    })
+    setStatus(newStatus)
+    setSaving(false)
+  }
 
   const toggleModule = (id: string) => {
     setExpandedModules(prev => {
@@ -128,6 +142,37 @@ export function CourseEditor({ courseId, courseSlug, modules: initialModules }: 
 
   return (
     <div className="space-y-4">
+      {/* Status bar */}
+      <div className="flex items-center justify-between p-4 rounded-xl border border-border bg-card">
+        <div className="flex items-center gap-3">
+          <span className={cn(
+            "text-xs font-medium px-2.5 py-1 rounded-full",
+            status === "published"
+              ? "bg-green-500/10 text-green-600"
+              : "bg-amber-500/10 text-amber-600"
+          )}>
+            {status === "published" ? "Publicerad" : "Draft"}
+          </span>
+          <span className="text-xs text-muted-foreground">
+            {status === "draft"
+              ? "Kursen syns inte publikt. Dela via direktlänk."
+              : "Kursen är synlig för användare som slutfört de 2 grundkurserna."}
+          </span>
+        </div>
+        <button
+          onClick={handleToggleStatus}
+          disabled={saving}
+          className={cn(
+            "px-4 py-1.5 rounded-full text-xs font-medium transition-all",
+            status === "published"
+              ? "border border-border hover:bg-secondary"
+              : "bg-green-500 text-white hover:bg-green-600"
+          )}
+        >
+          {status === "published" ? "Gör till draft" : "Publicera"}
+        </button>
+      </div>
+
       {modules.map((mod, mi) => (
         <div key={mod.id} className="border border-border rounded-xl bg-card overflow-hidden">
           {/* Module header */}

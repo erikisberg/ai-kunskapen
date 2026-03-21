@@ -48,6 +48,7 @@ export default async function CourseEditorPage({ params }: Props) {
         <CourseEditor
           courseId={course.id}
           courseSlug={course.slug}
+          courseStatus={course.status || "draft"}
           modules={modulesWithSlides}
         />
       </main>

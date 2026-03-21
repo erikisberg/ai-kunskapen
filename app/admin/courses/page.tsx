@@ -44,7 +44,16 @@ export default async function CoursesPage() {
                   <p className="text-sm text-muted-foreground">{course.slug}</p>
                 </div>
               </div>
-              <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="flex items-center gap-2">
+                <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
+                  course.status === "published"
+                    ? "bg-green-500/10 text-green-600"
+                    : "bg-amber-500/10 text-amber-600"
+                }`}>
+                  {course.status === "published" ? "Publicerad" : "Draft"}
+                </span>
+                <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
             </Link>
           ))}
 
