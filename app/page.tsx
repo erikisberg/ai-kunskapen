@@ -119,11 +119,11 @@ export default function HomePage() {
               Kurser
             </Link>
             <Link href="#foretag" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block">
-              For foretag
+              För företag
             </Link>
             {loggedIn ? (
               <Link href="/dashboard" className="text-xs font-medium bg-primary text-primary-foreground px-4 py-1.5 rounded-full hover:bg-primary/90 transition-colors">
-                Min oversikt
+                Min översikt
               </Link>
             ) : (
               <>
@@ -131,7 +131,7 @@ export default function HomePage() {
                   Logga in
                 </Link>
                 <Link href="/kontakt" className="text-xs font-medium bg-primary text-primary-foreground px-4 py-1.5 rounded-full hover:bg-primary/90 transition-colors">
-                  Kom igang
+                  Kom igång
                 </Link>
               </>
             )}
@@ -148,12 +148,12 @@ export default function HomePage() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-sm font-medium text-primary mb-8 tracking-wide uppercase"
           >
-            AI-utbildning for arbetsplatsen
+            AI-utbildning för arbetsplatsen
           </motion.p>
 
           {/* Staggered word reveal */}
           <h1 className="font-[family-name:var(--font-display)] text-[clamp(3rem,12vw,8rem)] leading-[1.1] tracking-[-0.035em] uppercase mb-8">
-            {["Gor", "ditt"].map((word, i) => (
+            {["Gör", "ditt"].map((word, i) => (
               <motion.span
                 key={word}
                 initial={{ opacity: 0, y: 50 }}
@@ -189,8 +189,8 @@ export default function HomePage() {
             transition={{ delay: 0.9, duration: 0.8 }}
             className="text-lg md:text-xl text-muted-foreground max-w-lg mx-auto mb-12 leading-relaxed"
           >
-            Interaktiva kurser som lar dina anstallda anvanda AI och skydda sig
-            mot AI-bedragerier. 20 minuter. Bidraget gar till valgorenhet.
+            Interaktiva kurser som lär dina anställda använda AI och skydda sig
+            mot AI-bedrägerier. 20 minuter. Bidraget går till välgörenhet.
           </motion.p>
 
           <motion.div
@@ -207,22 +207,23 @@ export default function HomePage() {
             </Link>
           </motion.div>
 
-          {/* Scroll hint — chevron */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
-            className="mt-16"
+        </motion.div>
+
+        {/* Scroll hint — outside parallax container */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        >
+          <motion.svg
+            width="24" height="24" viewBox="0 0 24 24" fill="none"
+            className="text-foreground/20"
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <motion.svg
-              width="24" height="24" viewBox="0 0 24 24" fill="none"
-              className="mx-auto text-foreground/20"
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </motion.svg>
-          </motion.div>
+            <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </motion.svg>
         </motion.div>
       </section>
 
@@ -232,9 +233,9 @@ export default function HomePage() {
           {[...Array(2)].map((_, i) => (
             <div key={i} className="flex items-center gap-8 mr-8">
               {[
-                "PROMPTNING", "DEEPFAKES", "CHATBOTAR", "ROSTKLONING",
-                "KRITISKT TANKANDE", "AI-BEDRAGERIER", "BILDGENERERING",
-                "KALLKRITIK", "AUTOMATION BIAS", "FAMILJESAKERHET",
+                "PROMPTNING", "DEEPFAKES", "CHATBOTAR", "RÖSTKLONING",
+                "KRITISKT TÄNKANDE", "AI-BEDRÄGERIER", "BILDGENERERING",
+                "KÄLLKRITIK", "AUTOMATION BIAS", "FAMILJESÄKERHET",
                 "EU AI ACT", "PHISHING"
               ].map((word) => (
                 <span key={`${i}-${word}`} className="font-[family-name:var(--font-display)] text-xl md:text-2xl tracking-[-0.03em] text-foreground/10 uppercase">
@@ -251,18 +252,18 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto">
           <FadeIn>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,6vw,4rem)] leading-[1.1] tracking-[-0.03em] uppercase text-center mb-4">
-              Sa funkar <span className="text-primary">det</span>
+              Så funkar <span className="text-primary">det</span>
             </h2>
             <p className="text-center text-muted-foreground text-lg mb-16 max-w-lg mx-auto">
-              Tre steg till en AI-redo arbetsplats. Ingen installation, inga losenord.
+              Tre steg till en AI-redo arbetsplats. Ingen installation, inga lösenord.
             </p>
           </FadeIn>
 
           <Stagger className="grid md:grid-cols-3 gap-8">
             {[
-              { step: "01", icon: Building2, title: "Kontakta oss", description: "Beratta om ert foretag och hur manga anstallda ni vill utbilda." },
-              { step: "02", icon: Users, title: "Anstallda far en inbjudan", description: "Varje person far en unik lank via mejl. Ett klick — ingen registrering." },
-              { step: "03", icon: BarChart3, title: "Ni foljer framstegen", description: "Se i realtid vem som paborjat, slutfort och hur langt varje person kommit." },
+              { step: "01", icon: Building2, title: "Kontakta oss", description: "Berätta om ert företag och hur många anställda ni vill utbilda." },
+              { step: "02", icon: Users, title: "Anställda får en inbjudan", description: "Varje person får en unik länk via mejl. Ett klick — ingen registrering." },
+              { step: "03", icon: BarChart3, title: "Ni följer framstegen", description: "Se i realtid vem som påbörjat, slutfört och hur långt varje person kommit." },
             ].map((item) => {
               const Icon = item.icon
               return (
@@ -292,11 +293,11 @@ export default function HomePage() {
               />
               <Heart className="w-8 h-8 mx-auto mb-4 opacity-80 relative z-10" />
               <h3 className="font-[family-name:var(--font-display)] text-2xl uppercase mb-3 relative z-10">
-                <Counter target={200} /> kr per anstald. Allt gar till valgorenhet.
+                <Counter target={200} /> kr per anställd. Allt går till välgörenhet.
               </h3>
               <p className="text-primary-foreground/70 max-w-md mx-auto relative z-10">
-                Inget vinstintresse. Bidraget gar oavkortat till en valgorenhetsorganisation
-                som ditt foretag valjer. Ni far en AI-redo arbetsplats, samhallet far stod.
+                Inget vinstintresse. Bidraget går oavkortat till en välgörenhetsorganisation
+                som ditt företag väljer. Ni får en AI-redo arbetsplats, samhället får stöd.
               </p>
             </div>
           </FadeIn>
@@ -308,7 +309,7 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto">
           <FadeIn>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,6vw,4rem)] leading-[1.1] tracking-[-0.03em] uppercase text-center mb-4">
-              Tva <span className="text-primary">kurser</span>
+              Två <span className="text-primary">kurser</span>
             </h2>
             <p className="text-center text-muted-foreground text-lg mb-16 max-w-md mx-auto">
               Interaktiva kurser med AI-chatt, quiz och realistiska scenarion.
@@ -317,8 +318,8 @@ export default function HomePage() {
 
           <Stagger className="grid md:grid-cols-2 gap-6">
             {[
-              { type: "learn", href: "/journey/learn", icon: BookOpen, title: "Anvand AI i vardagen", desc: "Lar dig prata med AI-chatbotar, skriva bra fragor och fa hjalp med allt fran matlagning till rapporter.", meta: "Praktiska ovningar" },
-              { type: "safe", href: "/journey/safe", icon: Shield, title: "Skydda dig mot AI-hot", desc: "Lar dig kanna igen deepfakes, AI-bedragerier och skydda dig sjalv och din familj mot nya hot.", meta: "Realistiska scenarion" },
+              { type: "learn", href: "/journey/learn", icon: BookOpen, title: "Använd AI i vardagen", desc: "Lär dig prata med AI-chatbotar, skriva bra frågor och få hjälp med allt från matlagning till rapporter.", meta: "Praktiska övningar" },
+              { type: "safe", href: "/journey/safe", icon: Shield, title: "Skydda dig mot AI-hot", desc: "Lär dig känna igen deepfakes, AI-bedrägerier och skydda dig själv och din familj mot nya hot.", meta: "Realistiska scenarion" },
             ].map((course) => {
               const Icon = course.icon
               const isHovered = hoveredCard === course.type
@@ -370,16 +371,16 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto">
           <FadeIn className="mb-14">
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(2rem,6vw,4rem)] leading-[1.1] tracking-[-0.03em] uppercase">
-              Vad <span className="text-primary">deltagare</span> sager
+              Vad <span className="text-primary">deltagare</span> säger
             </h2>
           </FadeIn>
 
           <Stagger className="grid md:grid-cols-3 gap-4">
             {[
-              { span: 2, bg: "bg-primary text-primary-foreground", text: "Vi korde kursen pa hela kontoret. 45 av 52 slutforde pa en vecka. Nu pratar alla om AI vid fikat.", name: "Lena", role: "HR-chef, medelstort foretag", size: "text-2xl md:text-3xl", h: "min-h-[340px]" },
-              { span: 1, bg: "bg-accent text-accent-foreground", text: "Scenariot med rostkloning var en ogonoppnare. Nu har hela familjen en kodfras.", name: "Anders", role: "Anstalld, 45 ar", size: "text-xl md:text-2xl", h: "min-h-[340px]" },
-              { span: 1, bg: "bg-card text-foreground border border-border", text: "20 minuter och ingen teknikjargong. Antligen nagot jag kan skicka till mina kollegor.", name: "Fatima", role: "Teamledare", size: "text-xl md:text-2xl", h: "min-h-[280px]" },
-              { span: 2, bg: "bg-foreground text-background", text: "Det basta? Vi bidrog med 10 000 kr till Kodcentrum samtidigt. Enklaste CSR-insatsen vi gjort.", name: "Marcus", role: "VD, 30 anstallda", size: "text-2xl md:text-3xl", h: "min-h-[280px]" },
+              { span: 2, bg: "bg-primary text-primary-foreground", text: "Vi körde kursen på hela kontoret. 45 av 52 slutförde på en vecka. Nu pratar alla om AI vid fikat.", name: "Lena", role: "HR-chef, medelstort företag", size: "text-2xl md:text-3xl", h: "min-h-[340px]" },
+              { span: 1, bg: "bg-accent text-accent-foreground", text: "Scenariot med röstkloning var en ögonöppnare. Nu har hela familjen en kodfras.", name: "Anders", role: "Anställd, 45 år", size: "text-xl md:text-2xl", h: "min-h-[340px]" },
+              { span: 1, bg: "bg-card text-foreground border border-border", text: "20 minuter och ingen teknikjargong. Äntligen något jag kan skicka till mina kollegor.", name: "Fatima", role: "Teamledare", size: "text-xl md:text-2xl", h: "min-h-[280px]" },
+              { span: 2, bg: "bg-foreground text-background", text: "Det bästa? Vi bidrog med 10 000 kr till Kodcentrum samtidigt. Enklaste CSR-insatsen vi gjort.", name: "Marcus", role: "VD, 30 anställda", size: "text-2xl md:text-3xl", h: "min-h-[280px]" },
             ].map((q, i) => (
               <StaggerChild key={i} className={q.span === 2 ? "md:col-span-2" : ""}>
                 <motion.div
@@ -406,15 +407,15 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto">
           <FadeIn>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(1.8rem,5vw,3rem)] leading-[1.1] tracking-[-0.03em] uppercase mb-14">
-              Vad ingar
+              Vad ingår
             </h2>
           </FadeIn>
 
           <Stagger className="grid md:grid-cols-3 gap-10">
             {[
               { title: "Interaktiva kurser", text: "Inte PowerPoints. AI-chatt, quiz, scenarion och checklistor som engagerar. Anpassade till er bransch." },
-              { title: "Foretagsdashboard", text: "Se i realtid vilka som paborjat, slutfort och hur langt varje anstalld kommit. Delbar med ledningen." },
-              { title: "Valgorenhetsbidrag", text: "200 kr per anstalld. Allt gar till en valgorenhetsorganisation ni valjer. Ni far kvitto och kan kommunicera det internt." },
+              { title: "Företagsdashboard", text: "Se i realtid vilka som påbörjat, slutfört och hur långt varje anställd kommit. Delbar med ledningen." },
+              { title: "Välgörenhetsbidrag", text: "200 kr per anställd. Allt går till en välgörenhetsorganisation ni väljer. Ni får kvitto och kan kommunicera det internt." },
             ].map((item) => (
               <StaggerChild key={item.title} className="border-t border-foreground/15 pt-6">
                 <p className="font-semibold text-lg mb-2">{item.title}</p>
@@ -431,17 +432,17 @@ export default function HomePage() {
           <div className="grid md:grid-cols-[1fr_2fr] gap-16">
             <FadeIn>
               <h2 className="font-[family-name:var(--font-display)] text-[clamp(1.8rem,4vw,3rem)] leading-[1.1] tracking-[-0.03em] uppercase sticky top-24">
-                Vanliga <span className="text-primary">fragor</span>
+                Vanliga <span className="text-primary">frågor</span>
               </h2>
             </FadeIn>
 
             <Stagger className="divide-y divide-background/10">
               {[
-                { q: "Vad kostar det?", a: "200 kr per anstalld som genomfor kursen. Hela beloppet gar till valgorenhet — vi tar inget." },
-                { q: "Behover mina anstallda skapa konton?", a: "Nej. De far en unik lank via mejl. Ett klick och de ar inne — inga losenord." },
-                { q: "Hur lang tid tar det?", a: "Varje kurs tar ca 20 minuter. Anstallda kan pausa och fortsatta senare." },
-                { q: "Kan jag se vilka som slutfort?", a: "Ja. Ni far en dashboard med realtidsoversikt per person." },
-                { q: "Behover vi installera nagot?", a: "Nej. Allt kors i webblasaren. Fungerar pa mobil, surfplatta och dator." },
+                { q: "Vad kostar det?", a: "200 kr per anställd som genomför kursen. Hela beloppet går till välgörenhet — vi tar inget." },
+                { q: "Behöver mina anställda skapa konton?", a: "Nej. De får en unik länk via mejl. Ett klick och de är inne — inga lösenord." },
+                { q: "Hur lång tid tar det?", a: "Varje kurs tar ca 20 minuter. Anställda kan pausa och fortsätta senare." },
+                { q: "Kan jag se vilka som slutfört?", a: "Ja. Ni får en dashboard med realtidsöversikt per person." },
+                { q: "Behöver vi installera något?", a: "Nej. Allt körs i webbläsaren. Fungerar på mobil, surfplatta och dator." },
               ].map((item, i) => (
                 <StaggerChild key={i} className="py-6 first:pt-0">
                   <h3 className="font-semibold text-lg mb-2">{item.q}</h3>
@@ -460,14 +461,14 @@ export default function HomePage() {
             Redo att utbilda ert team?
           </h2>
           <p className="text-lg text-primary-foreground/70 mb-12 max-w-md mx-auto">
-            Kontakta oss sa hjalper vi er komma igang. Era anstallda kan borja redan idag.
+            Kontakta oss så hjälper vi er komma igång. Era anställda kan börja redan idag.
           </p>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
             <Link
               href="/kontakt"
               className="inline-flex items-center gap-2.5 bg-accent text-accent-foreground px-8 py-4 rounded-full font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase"
             >
-              Kom igang
+              Kom igång
               <ArrowRight className="w-5 h-5" />
             </Link>
           </motion.div>
@@ -484,7 +485,7 @@ export default function HomePage() {
             <span className="text-sm font-medium">AI-kunskapen</span>
           </div>
           <div className="flex items-center gap-6 text-xs text-background/50">
-            <span>Bidraget gar till valgorenhet</span>
+            <span>Bidraget går till välgörenhet</span>
             <span>2026</span>
           </div>
         </div>
