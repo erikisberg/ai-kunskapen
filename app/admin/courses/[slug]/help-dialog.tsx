@@ -1,10 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { HelpCircle, X } from "lucide-react"
 
 export function HelpDialog() {
   const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
 
   return (
     <>
@@ -16,11 +20,11 @@ export function HelpDialog() {
         <HelpCircle className="w-4 h-4 text-muted-foreground" />
       </button>
 
-      {open && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" style={{ margin: 0 }}>
+      {open && mounted && createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setOpen(false)} />
           <div className="relative z-10 bg-background border border-border rounded-2xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-auto">
-            <div className="flex items-center justify-between p-5 border-b border-border">
+            <div className="sticky top-0 flex items-center justify-between p-5 border-b border-border bg-background rounded-t-2xl">
               <h2 className="font-semibold text-lg">Så bygger du en kurs</h2>
               <button onClick={() => setOpen(false)} className="w-8 h-8 rounded-lg hover:bg-secondary flex items-center justify-center transition-colors">
                 <X className="w-4 h-4" />
@@ -62,12 +66,18 @@ export function HelpDialog() {
               </div>
 
               <div>
+                <h3 className="font-semibold text-foreground mb-1">Status</h3>
+                <p><strong>Draft</strong> — kursen syns inte publikt, bara via direktlänk. <strong>Publicerad</strong> — synlig för användare.</p>
+              </div>
+
+              <div>
                 <h3 className="font-semibold text-foreground mb-1">Quiz & Scenario — detaljer</h3>
                 <p>Rubrik och brödtext redigeras här. Quiz-alternativ, scenario-val och checklista-punkter redigeras i <a href="https://directus-production-2883.up.railway.app" target="_blank" rel="noopener" className="text-primary underline">Directus</a> under respektive samling.</p>
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   )
