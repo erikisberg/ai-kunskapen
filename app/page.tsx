@@ -65,22 +65,13 @@ export default function HomePage() {
             mot AI-bedrägerier. 20 minuter. Bidraget går till välgörenhet.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="#foretag"
-              className="inline-flex items-center gap-2.5 bg-foreground text-background px-8 py-4 rounded-full font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase hover:bg-foreground/90 transition-colors"
-            >
-              Boka för ditt företag
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <Link
-              href="#kurser"
-              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Prova en kurs fritt
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+          <Link
+            href="#foretag"
+            className="inline-flex items-center gap-2.5 bg-foreground text-background px-8 py-4 rounded-full font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase hover:bg-foreground/90 transition-colors"
+          >
+            Utbilda ditt team
+            <ArrowRight className="w-5 h-5" />
+          </Link>
 
           <div className="mt-20">
             <div className="w-px h-12 bg-foreground/15 mx-auto" />
@@ -426,22 +417,13 @@ export default function HomePage() {
             Registrera ditt företag, ladda upp mejladresser, och dina anställda
             kan börja redan idag.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/admin"
-              className="inline-flex items-center gap-2.5 bg-accent text-accent-foreground px-8 py-4 rounded-full font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase hover:bg-accent/90 transition-colors"
-            >
-              Kom igång
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <Link
-              href="#kurser"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors"
-            >
-              Eller prova en kurs först
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+          <Link
+            href="/kontakt"
+            className="inline-flex items-center gap-2.5 bg-accent text-accent-foreground px-8 py-4 rounded-full font-[family-name:var(--font-display)] text-lg tracking-[-0.02em] uppercase hover:bg-accent/90 transition-colors"
+          >
+            Kom igång
+            <ArrowRight className="w-5 h-5" />
+          </Link>
         </div>
       </section>
 
