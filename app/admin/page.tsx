@@ -120,7 +120,7 @@ export default async function AdminPage() {
                     </div>
                     <div>
                       <p className="text-2xl font-semibold tabular-nums">
-                        {((org.accepted * (org.pricePerUser || 0)) / 100).toLocaleString("sv-SE")}
+                        {((org.completed * (org.pricePerUser || 0)) / 100).toLocaleString("sv-SE")}
                       </p>
                       <p className="text-xs text-muted-foreground">Bidrag (kr)</p>
                     </div>

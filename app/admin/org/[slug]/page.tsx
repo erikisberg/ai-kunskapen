@@ -127,7 +127,7 @@ export default async function OrgDetailPage({ params }: Props) {
             { icon: Mail, label: "Inbjudna", value: stats.invitations, color: "primary" },
             { icon: Users, label: "Accepterat", value: stats.accepted, color: "primary" },
             { icon: CheckCircle2, label: "Slutfört kurs", value: stats.completed, color: "primary" },
-            { icon: Building2, label: "Bidrag (kr)", value: ((stats.accepted * (org.pricePerUser || 0)) / 100).toLocaleString("sv-SE"), color: "accent" },
+            { icon: Building2, label: "Bidrag (kr)", value: ((stats.completed * (org.pricePerUser || 0)) / 100).toLocaleString("sv-SE"), color: "accent" },
           ].map((stat) => {
             const Icon = stat.icon;
             return (

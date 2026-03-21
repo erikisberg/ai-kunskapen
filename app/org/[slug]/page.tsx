@@ -55,39 +55,47 @@ export default async function PublicOrgDashboard({ params }: Props) {
       .where(inArray(schema.progress.userId, userIds));
   }
 
-  // Build per-person data
-  const people = invitations.map((inv) => {
-    const user = orgUsers.find((u) => u.email === inv.email);
-    const userProgress = user
-      ? allProgress.filter((p) => p.userId === user.id)
-      : [];
+  // Build per-person data — deduplicate by email
+  const seenEmails = new Set<string>();
+  const people = invitations
+    .filter((inv) => {
+      if (seenEmails.has(inv.email)) return false;
+      seenEmails.add(inv.email);
+      return true;
+    })
+    .map((inv) => {
+      const user = orgUsers.find((u) => u.email === inv.email);
+      const userProgress = user
+        ? allProgress.filter((p) => p.userId === user.id)
+        : [];
 
-    const learnModules = userProgress.filter((p) => p.courseSlug === "anvanda-ai");
-    const safeModules = userProgress.filter((p) => p.courseSlug === "forsta-risken");
+      const learnModules = userProgress.filter((p) => p.courseSlug === "anvanda-ai");
+      const safeModules = userProgress.filter((p) => p.courseSlug === "forsta-risken");
 
-    const hasStarted = inv.status === "accepted";
-    const learnDone = learnModules.length >= 9; // ~9 modules in learn course
-    const safeDone = safeModules.length >= 11;  // ~11 modules in safe course
+      const hasStarted = inv.status === "accepted";
+      const learnDone = learnModules.length >= 9;
+      const safeDone = safeModules.length >= 11;
+      const completedAnyCourse = learnDone || safeDone;
 
-    return {
-      email: inv.email,
-      name: user?.name,
-      inviteStatus: inv.status,
-      hasStarted,
-      learnModules: learnModules.length,
-      safeModules: safeModules.length,
-      learnDone,
-      safeDone,
-      bothDone: learnDone && safeDone,
-    };
-  });
+      return {
+        email: inv.email,
+        name: user?.name,
+        inviteStatus: inv.status,
+        hasStarted,
+        learnModules: learnModules.length,
+        safeModules: safeModules.length,
+        learnDone,
+        safeDone,
+        completedAnyCourse,
+        bothDone: learnDone && safeDone,
+      };
+    });
 
   // Aggregate stats
-  const total = invitations.length;
+  const total = people.length;
   const accepted = people.filter((p) => p.hasStarted).length;
-  const completedAtLeastOne = people.filter((p) => p.learnDone || p.safeDone).length;
-  const completedBoth = people.filter((p) => p.bothDone).length;
-  const donation = (accepted * (org.pricePerUser || 0)) / 100;
+  const completedAtLeastOne = people.filter((p) => p.completedAnyCourse).length;
+  const donation = (completedAtLeastOne * (org.pricePerUser || 0)) / 100;
   const completionRate = total > 0 ? Math.round((completedAtLeastOne / total) * 100) : 0;
 
   return (
@@ -230,7 +238,7 @@ export default async function PublicOrgDashboard({ params }: Props) {
               {donation.toLocaleString("sv-SE")} kr till {org.charityName}
             </p>
             <p className="text-sm opacity-70">
-              Tack vare att {accepted} anställda deltar
+              Tack vare att {completedAtLeastOne} anställda slutfört kursen
             </p>
           </div>
         )}
